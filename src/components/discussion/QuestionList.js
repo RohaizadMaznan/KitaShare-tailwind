@@ -23,8 +23,8 @@ export default function QuestionList({
               <div className="inline-block font-medium text-sm">Votes</div>
             </div>
 
-            <a
-              href="#"
+            <Link
+              to="/"
               className="grid grid-rows-2 mx-auto mb-3 py-1 w-4/5 2lg:w-3/5 rounded-md bg-green-400"
             >
               <div className="inline-block font-medium text-2xl text-white">
@@ -34,7 +34,7 @@ export default function QuestionList({
               <div className="inline-block font-medium text-white mx-1 text-sm lg:text-md">
                 Answers
               </div>
-            </a>
+            </Link>
 
             <div className="grid my-3">
               <span className="inline-block font-bold text-xs">
@@ -93,8 +93,8 @@ export default function QuestionList({
 
             <div className="grid grid-cols-2 mt-4 my-auto">
               <div className="col-span-12 lg:col-span-8">
-                <a
-                  href="#"
+                <Link
+                  to="/"
                   className="inline-block rounded-full text-white 
                             bg-red-400 hover:bg-red-500 duration-300 
                             text-xs font-bold 
@@ -102,7 +102,7 @@ export default function QuestionList({
                             opacity-90 hover:opacity-100"
                 >
                   {tag}
-                </a>
+                </Link>
                 {/* <a
                   href="#"
                   className="inline-block rounded-full text-white 
@@ -136,7 +136,7 @@ export default function QuestionList({
               </div>
 
               <div className="col-none hidden mr-2 lg:block lg:col-start-9 lg:col-end-12">
-                <a href="#" className="flex items-center">
+                <Link to="/" className="flex items-center">
                   <img
                     src={avatar}
                     alt="avatar"
@@ -146,7 +146,7 @@ export default function QuestionList({
                   <div className="text-gray-600 font-bold text-sm hover:underline">
                     {postOwner}
                   </div>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

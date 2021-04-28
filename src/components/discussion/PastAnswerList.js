@@ -1,14 +1,13 @@
-import { render } from "@testing-library/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
 export default function PastAnswerList({label, url}) {
 
-    let list = [
-        {label: 'Programming: With Icon and Text', url:'/discussion/home'},
-        {label: 'Angular Save Operation is Gone After Refresh', url:'/discussion/home'},
-        {label: 'Comparing Different Excel Permutations', url:'/discussion/home'},
-    ];
+    // let list = [
+    //     {label: 'Programming: With Icon and Text', url:'/discussion/home'},
+    //     {label: 'Angular Save Operation is Gone After Refresh', url:'/discussion/home'},
+    //     {label: 'Comparing Different Excel Permutations', url:'/discussion/home'},
+    // ];
 
   return (
     <div>

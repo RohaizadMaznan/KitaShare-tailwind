@@ -15,7 +15,10 @@ import MainLayout from "./components/layout/MainLayout";
 import MainNoFooter from "./components/layout/MainNoFooter";
 import DocumentationLayout from "./components/layout/DocumentationLayout";
 import SecondaryLayout from "./components/layout/SecondaryLayout";
+import StudentLayout from "./components/layout/StudentLayout";
+import StudentLayout2 from "./components/layout/StudentLayout2";
 import Documentation from "./pages/documentation/index";
+import StudentDashboard from "./pages/student/index";
 import AgreementPrivacy from "./pages/documentation/AgreementPrivacy";
 import TermConditions from "./pages/documentation/TermConditions";
 import OCRDocs from "./pages/documentation/ocr";
@@ -26,6 +29,10 @@ import Discussion from "./pages/discussion/index";
 import AskQuestion from "./pages/discussion/AskQuestion";
 import TheQuestion from "./pages/discussion/TheQuestion";
 import SuccessPostQuestion from "./pages/discussion/Success";
+import StudentProfile from "./pages/student/Profile";
+import MyQuestion from "./pages/student/MyQuestion";
+import MyUpload from "./pages/student/MyUpload";
+import Upload from "./pages/student/Upload";
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
   <Route
@@ -119,10 +126,32 @@ function App() {
         />
 
         <AppRoute
-          path="/test"
-          layout={SecondaryLayout}
-          component={Test}
+          path="/student/dashboard"
+          layout={StudentLayout2}
+          component={StudentDashboard}
         />
+        <AppRoute
+          path="/student/profile"
+          layout={StudentLayout2}
+          component={StudentProfile}
+        />
+        <AppRoute
+          path="/student/my-question"
+          layout={StudentLayout2}
+          component={MyQuestion}
+        />
+        <AppRoute
+          path="/student/my-upload"
+          layout={StudentLayout2}
+          component={MyUpload}
+        />
+        <AppRoute
+          path="/student/upload-file"
+          layout={SecondaryLayout}
+          component={Upload}
+        />
+
+        <AppRoute path="/test" layout={StudentLayout} component={Test} />
       </Switch>
     </>
   );

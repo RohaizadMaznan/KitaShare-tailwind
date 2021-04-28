@@ -16,7 +16,7 @@ export default function Success() {
               src={require("../../images/success-img.svg")}
               width="300"
               height="auto"
-              alt="Success image"
+              alt="Success"
             />
             <p className="mt-5 lg:mt-10 lg:text-xl text-md ">
               Your question has been successfully submitted.
