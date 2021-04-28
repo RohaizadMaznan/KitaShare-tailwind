@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Avatar from "../documentation/Avatar";
 
 function Header() {
   const [top, setTop] = useState(true);
@@ -15,9 +16,8 @@ function Header() {
 
   return (
     <header
-      className={`fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out ${
-        !top && "bg-white blur shadow-lg"
-      }`}
+      className={`fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out ${!top &&
+        "bg-white blur shadow-lg"}`}
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
@@ -52,7 +52,6 @@ function Header() {
                   fillRule="nonzero"
                 />
               </svg>
-              
             </Link>
           </div>
 
@@ -66,7 +65,7 @@ function Header() {
                       type="search"
                       name="search"
                       placeholder="Search"
-                      className="bg-gray-100 border md:outline-black h-10 px-5 pr-10 rounded-full text-sm focus:outline-none focus:bg-gray-200"
+                      className="bg-gray-100 border h-10 px-5 pr-10 rounded-full text-sm focus:outline-none focus:bg-gray-200"
                     />
                     <button
                       type="submit"
@@ -115,6 +114,9 @@ function Header() {
                     />
                   </svg>
                 </Link>
+              </li>
+              <li>
+                <Avatar />
               </li>
             </ul>
           </nav>

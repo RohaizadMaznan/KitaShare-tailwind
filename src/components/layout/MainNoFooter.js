@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Chatbot from "../Chatbot";
 import Header from "./main/Header";
 
 class Layout extends Component {
@@ -18,6 +19,8 @@ class Layout extends Component {
             {/*  Page sections */}
             {this.props.children}
           </main>
+
+          <Chatbot />
         </div>
       </>
     );

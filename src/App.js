@@ -24,6 +24,8 @@ import Test from "./pages/Test";
 
 import Discussion from "./pages/discussion/index";
 import AskQuestion from "./pages/discussion/AskQuestion";
+import TheQuestion from "./pages/discussion/TheQuestion";
+import SuccessPostQuestion from "./pages/discussion/Success";
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
   <Route
@@ -104,6 +106,16 @@ function App() {
           path="/discussion/ask-question"
           layout={SecondaryLayout}
           component={AskQuestion}
+        />
+        <AppRoute
+          path="/discussion/the-question"
+          layout={SecondaryLayout}
+          component={TheQuestion}
+        />
+        <AppRoute
+          path="/discussion/successfully-submit"
+          layout={SecondaryLayout}
+          component={SuccessPostQuestion}
         />
 
         <AppRoute

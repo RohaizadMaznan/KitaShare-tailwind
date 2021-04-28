@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Sidebar from "./documentation/Sidebar";
 import Header from "./documentation/Header";
+import Chatbot from "../Chatbot";
 
 class Layout extends Component {
   constructor(props) {
@@ -23,7 +24,8 @@ class Layout extends Component {
             </div>
           </div>
 
-          {/*  Site footer */}
+          {/*  Chatbot */}
+          <Chatbot />
         </div>
       </>
     );

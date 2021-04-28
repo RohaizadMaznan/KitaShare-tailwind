@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function QuestionList({
   title,
@@ -80,12 +81,12 @@ export default function QuestionList({
             </div>
 
             <div className="mt-2">
-              <a
-                href="#"
+              <Link
+                to="/discussion/the-question"
                 className="sm:text-sm md:text-md lg:text-lg text-gray-700 font-bold hover:underline"
               >
                 {title}
-              </a>
+              </Link>
 
               <p className="mt-2 text-gray-600 text-sm md:text-md">{content}</p>
             </div>

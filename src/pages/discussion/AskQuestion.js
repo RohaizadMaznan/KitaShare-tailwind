@@ -6,10 +6,14 @@ export default function AskQuestion() {
   return (
     <>
       <div
-        className="w-full lg:w-3/5 md:mr-10 p-3 mt-6 mb-10 lg:mt-0 text-gray-900 leading-normal shadow-lg border-rounded"
+        className="w-full lg:w-3/5 md:mr-10 p-3 mt-6 mb-10 lg:mt-0 text-gray-900 leading-normal bg-white shadow-lg border-rounded"
         data-aos="fade-up"
         data-aos-delay="150"
       >
+        <div>
+          <p className="text-xl">Ask a public question</p>
+        </div>
+        <hr className="border-b my-5 border-gray-200" />
         <div>
           <form action="#" method="post">
             <div className="mb-6">
@@ -42,7 +46,10 @@ export default function AskQuestion() {
                 Include all the information someone would need to answer your
                 question
               </p>
-              <textarea rows="10" className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"></textarea>
+              <textarea
+                rows="10"
+                className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
+              ></textarea>
             </div>
 
             <div className="mb-6">
@@ -56,13 +63,13 @@ export default function AskQuestion() {
                 Pick one tag category suit your question
               </p>
               <select className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none">
-                  <option>Programming</option>
-                  <option>Exercise</option>
+                <option>Programming</option>
+                <option>Exercise</option>
               </select>
             </div>
             <div className="mb-2">
               <Link
-                to="/signin"
+                to="/discussion/successfully-submit"
                 className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600"
               >
                 <span className="text-sm">Submit your question</span>

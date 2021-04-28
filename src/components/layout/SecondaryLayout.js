@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Chatbot from "../Chatbot";
 import Header from "./documentation/Header";
 
 class Layout extends Component {
@@ -19,7 +20,8 @@ class Layout extends Component {
             {this.props.children}
           </div>
 
-          {/*  Site footer */}
+          {/* Chatbot */}
+          <Chatbot />
         </div>
       </>
     );
