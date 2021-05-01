@@ -4,6 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 import Comment from "./Comment";
 import moment from "moment";
 import { useToasts } from "react-toast-notifications";
+import Meta from "../../components/layout/meta/Meta";
 
 function TheQuestion({ match, history }) {
   const { addToast } = useToasts();
@@ -18,6 +19,15 @@ function TheQuestion({ match, history }) {
 
   const [posts, setPosts] = useState([]);
   // const [hide, setHide] = useState();
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  fire.auth().onAuthStateChanged((user) => {
+    if (user) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,7 +106,7 @@ function TheQuestion({ match, history }) {
   const handleComment = (e) => {
     e.preventDefault();
 
-    if(answerQuestion === ""){
+    if (answerQuestion === "") {
       const message = "Comment cannot be empty!";
       addToast(message, {
         appearance: "warning",
@@ -119,7 +129,10 @@ function TheQuestion({ match, history }) {
       })
       .then(() => {
         // console.log(`Success comment the post ${id}`);
-        addToast("Comment posted!", { appearance: "success", autoDismiss: true });
+        addToast("Comment posted!", {
+          appearance: "success",
+          autoDismiss: true,
+        });
         window.location.reload();
       })
       .catch((err) => {
@@ -131,6 +144,7 @@ function TheQuestion({ match, history }) {
 
   return (
     <>
+    <Meta title={`${posts.title} | KitaShare Web Application and OCR `}/>
       <div
         className="w-full p-5 mt-6 lg:mt-0 text-gray-900 leading-normal border-rounded"
         data-aos="fade-up"
@@ -236,45 +250,51 @@ function TheQuestion({ match, history }) {
         </div>
         <hr className="my-5" />
         <div className="text-sm flex justify-start space-x-4 opacity-50 hover:opacity-100 transition duration-200 ease-in-out">
-          <span
-            onClick={postVote}
-            className="hover:text-blue-600 hover:underline cursor-pointer"
-          >
-            Vote
-          </span>
-          <Link
-            to="/"
-            className="hover:text-blue-600 hover:underline cursor-pointer"
-          >
-            Edit
-          </Link>
-          {/* {
+          {loggedIn ? (
+            <>
+              <span
+                onClick={postVote}
+                className="hover:text-blue-600 hover:underline cursor-pointer"
+              >
+                Vote
+              </span>
+              <Link
+                to="/"
+                className="hover:text-blue-600 hover:underline cursor-pointer"
+              >
+                Edit
+              </Link>
+              {/* {
             hide === true ? <span onClick={postHide}>Hide</span> : <span onClick={postShow}>Show</span>
           } */}
-          <span
-            onClick={postHide}
-            className="hover:text-blue-600 hover:underline cursor-pointer"
-          >
-            Hide
-          </span>
-          <span
-            onClick={postShow}
-            className="hover:text-blue-600 hover:underline cursor-pointer"
-          >
-            Show
-          </span>
-          <span
-            onClick={postAnswered}
-            className="hover:text-blue-600 hover:underline cursor-pointer"
-          >
-            Answered
-          </span>
-          <span
-            onClick={postNotAnswered}
-            className="hover:text-blue-600 hover:underline cursor-pointer"
-          >
-            No answer
-          </span>
+              <span
+                onClick={postHide}
+                className="hover:text-blue-600 hover:underline cursor-pointer"
+              >
+                Hide
+              </span>
+              <span
+                onClick={postShow}
+                className="hover:text-blue-600 hover:underline cursor-pointer"
+              >
+                Show
+              </span>
+              <span
+                onClick={postAnswered}
+                className="hover:text-blue-600 hover:underline cursor-pointer"
+              >
+                Answered
+              </span>
+              <span
+                onClick={postNotAnswered}
+                className="hover:text-blue-600 hover:underline cursor-pointer"
+              >
+                No answer
+              </span>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
 
@@ -285,30 +305,43 @@ function TheQuestion({ match, history }) {
         data-aos="fade-up"
         data-aos-delay="350"
       >
-        <form onSubmit={handleComment}>
-          <div>
-            <p>Your Answer</p>
-            <textarea
-              isrequired="true"
-              id="answerQuestion"
-              value={answerQuestion}
-              onChange={({ target }) => setAnswerQuestion(target.value)}
-              rows="10"
-              className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
-            ></textarea>
-          </div>
-          <div className="mt-5">
-            <button
-              type="submit"
-              className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600"
-            >
-              <span className="text-sm">Post Your Answer</span>
-            </button>
-          </div>
-        </form>
+        {loggedIn ? (
+          <>
+            <form onSubmit={handleComment}>
+              <div>
+                <p>Your Answer</p>
+                <textarea
+                  isrequired="true"
+                  id="answerQuestion"
+                  value={answerQuestion}
+                  onChange={({ target }) => setAnswerQuestion(target.value)}
+                  rows="10"
+                  className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
+                ></textarea>
+              </div>
+              <div className="mt-5">
+                <button
+                  type="submit"
+                  className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600"
+                >
+                  <span className="text-sm">Post Your Answer</span>
+                </button>
+              </div>
+            </form>
+          </>
+        ) : (
+          <>
+            <p>
+              <Link to="/signin" className="hover:underline text-blue-500">
+                Sign in{" "}
+              </Link>{" "}
+              to post comment
+            </p>
+          </>
+        )}
       </div>
     </>
   );
 }
 
-export default withRouter(TheQuestion)
+export default withRouter(TheQuestion);

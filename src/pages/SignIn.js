@@ -3,6 +3,7 @@ import fire from "../auth/fbAuth";
 import provider from "../auth/AuthSetting";
 import { Link, withRouter } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
+import Meta from "../components/layout/meta/Meta";
 
 function SignIn({ history }) {
   const { addToast } = useToasts();
@@ -100,6 +101,7 @@ function SignIn({ history }) {
 
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
+    <Meta title="Sign in | KitaShare Web Application and OCR" />
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           {/* Page header */}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import fire from "../../auth/fbAuth";
+import Meta from "../../components/layout/meta/Meta";
 import UploadTable from "../../components/student/UploadTable";
 
 export default function MyUpload() {
@@ -40,6 +41,7 @@ export default function MyUpload() {
 
   return (
     <>
+    <Meta title="My Uploads & Handnotes | KitaShare Web Application and OCR" />
       <div
         className="w-full lg:max-h-screen p-5 mt-6 lg:mt-0 text-gray-900 leading-normal rounded-md"
         data-aos="fade-up"

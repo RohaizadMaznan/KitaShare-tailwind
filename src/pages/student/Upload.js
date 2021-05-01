@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Meta from "../../components/layout/meta/Meta";
 import StepCard from "../../components/upload/StepCard";
 
 export default function Upload() {
   return (
     <>
+    <Meta title="Onboard to Upload using OCR | KitaShare Web Application and OCR" />
       <div
         className="w-full lg:max-h-screen p-5 mt-6 lg:mt-0 text-gray-900 leading-normal rounded-md"
         data-aos="fade-up"

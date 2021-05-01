@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import fire from "../../auth/fbAuth";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import Meta from "../../components/layout/meta/Meta";
 
 export default function MyQuestion() {
   const [posts, setPosts] = useState([]);
@@ -41,6 +42,7 @@ export default function MyQuestion() {
 
   return (
     <>
+    <Meta title="My Questions | KitaShare Web Application and OCR" />
       <div
         className="w-full lg:max-h-screen p-5 mt-6 lg:mt-0 text-gray-900 leading-normal rounded-md"
         data-aos="fade-up"

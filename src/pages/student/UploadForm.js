@@ -5,6 +5,7 @@ import { FilePond, registerPlugin } from "react-filepond";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
 import "filepond/dist/filepond.min.css";
+import Meta from "../../components/layout/meta/Meta";
 
 registerPlugin(FilePondPluginImagePreview);
 
@@ -68,6 +69,7 @@ class UploadForm extends React.Component {
   render() {
     return (
       <>
+      <Meta title="Start Upload Handnotes | KitaShare Web Application and OCR" />
         <div
           className="w-full lg:max-h-screen p-5 mt-6 lg:mt-0 text-gray-900 leading-normal rounded-md"
           data-aos="fade-up"

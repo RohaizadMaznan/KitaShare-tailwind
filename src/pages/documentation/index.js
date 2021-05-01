@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import UsefulLikes from "../../components/documentation/UsefulLikes";
+import Meta from "../../components/layout/meta/Meta";
 
 export default function Documentation() {
   return (
     <div data-aos="fade-up" data-aos-delay="100">
+    <Meta title="About KitaShare &mdash; Documentation | KitaShare Web Application and OCR" />
       <div className="text-gray-900" >
         {/* <a
           href="/"

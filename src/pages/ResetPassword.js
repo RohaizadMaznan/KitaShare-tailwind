@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import fire from "../auth/fbAuth";
 import { useToasts } from "react-toast-notifications";
+import Meta from "../components/layout/meta/Meta";
 
 function ResetPassword() {
   const [email, setEmail] = useState("");
@@ -34,6 +35,7 @@ function ResetPassword() {
 
   return (
       <section className="bg-gradient-to-b from-gray-100 to-white">
+      <Meta title="Reset password | KitaShare Web Application and OCR" />
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="pt-32 pb-12 md:pt-40 md:pb-20">
             {/* Page header */}

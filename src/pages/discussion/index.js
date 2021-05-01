@@ -4,10 +4,20 @@ import { Link } from "react-router-dom";
 import PastAnswerCard from "../../components/discussion/PastAnswerCard";
 import QuestionList from "../../components/discussion/QuestionList";
 import moment from "moment";
+import Meta from "../../components/layout/meta/Meta";
 
 function Index() {
   const [posts, setPosts] = useState([]);
   // const [loading, setLoading] = useState(true);
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  fire.auth().onAuthStateChanged((user) => {
+    if (user) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +49,7 @@ function Index() {
 
   return (
     <>
+    <Meta title="Discussion &mdash; Home | KitaShare Web Application and OCR" />
       <div
         className="w-full lg:w-3/4 p-3 mt-6 mb-10 lg:mt-0 text-gray-900 leading-normal border-rounded"
         data-aos="fade-up"
@@ -49,12 +60,18 @@ function Index() {
             <p className="text-2xl">Top Questions</p>
           </div>
           <div className="mr-10">
-            <Link
-              to="/discussion/ask-question"
-              className="btn-sm text-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600 my-3 md:my-0 md:ml-3"
-            >
-              <span>Ask Question</span>
-            </Link>
+            { loggedIn ? (
+              <>
+                <Link
+                  to="/discussion/ask-question"
+                  className="btn-sm text-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600 my-3 md:my-0 md:ml-3"
+                >
+                  <span>Ask Question</span>
+                </Link>
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <hr className="border-b my-5 border-gray-200" />

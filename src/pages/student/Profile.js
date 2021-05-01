@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import fire from "../../auth/fbAuth";
 import ProfileInput from "../../components/student/ProfileInput";
 import ChangePasswordForm from "../../components/student/ChangePasswordForm";
+import Meta from "../../components/layout/meta/Meta";
 
 class Profile extends Component {
   constructor(props) {
@@ -90,6 +91,7 @@ class Profile extends Component {
   render() {
     return (
       <>
+      <Meta title="My Profile | KitaShare Web Application and OCR" />
         <div className="flex justify-items-start">
           <div
             className="w-full p-5 mt-6 lg:mt-0 text-gray-900 leading-normal rounded-md"

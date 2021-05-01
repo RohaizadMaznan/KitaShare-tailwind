@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import fire from "../../auth/fbAuth";
 import UploadTable from "../../components/student/UploadTable";
 import SearchBox from "../../components/student/SearchBox";
+import Meta from "../../components/layout/meta/Meta";
 
 export default function Index() {
   const [uploads, setUploads] = useState([]);
@@ -41,6 +42,7 @@ export default function Index() {
 
   return (
     <div>
+    <Meta title="KitaShare Student Dashboard | KitaShare Web Application and OCR" />
       <div
         className="lg:pl-6 space-y-10 text-gray-900"
         data-aos="fade-up"

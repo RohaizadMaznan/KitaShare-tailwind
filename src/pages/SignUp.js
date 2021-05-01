@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import fire from "../auth/fbAuth";
 import { Link, withRouter } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
+import Meta from "../components/layout/meta/Meta";
 
 function SignUp({ history }) {
   // Sign up process
@@ -56,16 +57,17 @@ function SignUp({ history }) {
         const message = err.message;
         addToast(message, { appearance: "error", autoDismiss: true });
       });
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPassword("");
-      setPassConf("");
-      setUniversiti("");
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
+    setPassConf("");
+    setUniversiti("");
   };
 
   return (
     <>
+      <Meta title="Sign up as a student now! | KitaShare Web Application and OCR" />
       <section className="bg-gradient-to-b from-gray-100 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="pt-32 pb-12 md:pt-40 md:pb-20">
@@ -208,11 +210,17 @@ function SignUp({ history }) {
                 </div>
                 <div className="text-sm text-gray-500 text-center mt-3">
                   By creating an account, you agree to the{" "}
-                  <Link to="/documentation/terms-and-condition" className="underline">
+                  <Link
+                    to="/documentation/terms-and-condition"
+                    className="underline"
+                  >
                     terms & conditions
                   </Link>
                   , and our{" "}
-                  <Link to="/documentation/agreement-of-privacy" className="underline">
+                  <Link
+                    to="/documentation/agreement-of-privacy"
+                    className="underline"
+                  >
                     privacy policy
                   </Link>
                   .

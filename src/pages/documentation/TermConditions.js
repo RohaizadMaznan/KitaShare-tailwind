@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import UsefulLikes from "../../components/documentation/UsefulLikes";
+import Meta from "../../components/layout/meta/Meta";
 
 export default function TermConditions() {
   return (
     <div data-aos="fade-up" data-aos-delay="100">
+    <Meta title="Terms & Conditions &mdash; Documentation | KitaShare Web Application and OCR" />
       <div className="text-gray-900">
         <div className="justify-between flex">
           <div>
