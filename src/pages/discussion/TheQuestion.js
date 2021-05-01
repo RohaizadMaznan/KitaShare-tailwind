@@ -1,7 +1,134 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import fire from "../../auth/fbAuth";
+import { Link, withRouter } from "react-router-dom";
+import Comment from "./Comment";
+import moment from "moment";
+import { useToasts } from "react-toast-notifications";
 
-export default function TheQuestion() {
+function TheQuestion({ match, history }) {
+  const { addToast } = useToasts();
+  const [answerQuestion, setAnswerQuestion] = useState("");
+  const [userId, setUserId] = useState();
+  const [firstName, setFirstName] = useState();
+
+  // console.log(match, "test");
+
+  const id = match.params.id;
+  // console.log(id);
+
+  const [posts, setPosts] = useState([]);
+  // const [hide, setHide] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const db = fire.firestore();
+      const snapshot = await db
+        .collection("posts")
+        .doc(id)
+        .get();
+      const data = snapshot.data();
+      setPosts(data);
+      // setHide(data.onHide)
+    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const postId = id;
+  const db = fire.firestore();
+  const postRef = db.collection("posts").doc(postId);
+
+  const postVote = () => {
+    console.log("Post has upvote +1");
+    postRef.update({
+      votes: fire.firestore.FieldValue.increment(1),
+    });
+  };
+
+  const postHide = () => {
+    console.log("Post is hiding");
+    postRef.update({
+      onHide: true,
+    });
+  };
+
+  const postShow = () => {
+    console.log("Post has show to public");
+    postRef.update({
+      onHide: false,
+    });
+  };
+
+  const postAnswered = () => {
+    console.log("Post has been answered! Congratulation");
+    postRef.update({
+      onMarkAnswered: true,
+    });
+  };
+
+  const postNotAnswered = () => {
+    console.log("Post has change to not answer.");
+    postRef.update({
+      onMarkAnswered: false,
+    });
+  };
+
+  fire.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // Get document users from firestore based on user.uid
+      fire
+        .firestore()
+        .collection("users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          // console.log("Document data:", doc.data().firstName)
+          setFirstName(doc.data().firstName);
+        });
+
+      setUserId(user.uid);
+      //setRole(user.role)
+    } else {
+      console.log("none");
+    }
+  });
+
+  const handleComment = (e) => {
+    e.preventDefault();
+
+    if(answerQuestion === ""){
+      const message = "Comment cannot be empty!";
+      addToast(message, {
+        appearance: "warning",
+        autoDismiss: true,
+      });
+      return null;
+    }
+
+    fire
+      .firestore()
+      .collection("posts")
+      .doc(id)
+      .collection("comments")
+      .add({
+        userId: userId,
+        postOwner: firstName,
+        createdAt: new Date().toISOString(),
+        postId: id,
+        comment: answerQuestion,
+      })
+      .then(() => {
+        // console.log(`Success comment the post ${id}`);
+        addToast("Comment posted!", { appearance: "success", autoDismiss: true });
+        window.location.reload();
+      })
+      .catch((err) => {
+        // console.log("Unsuccess comment");
+        const message = err.message;
+        addToast(message, { appearance: "error", autoDismiss: true });
+      });
+  };
+
   return (
     <>
       <div
@@ -9,12 +136,12 @@ export default function TheQuestion() {
         data-aos="fade-up"
         data-aos-delay="150"
       >
-        <nav class="font-bold" aria-label="Breadcrumb">
-          <ol class="list-none p-0 inline-flex">
-            <li class="flex items-center">
+        <nav className="font-bold" aria-label="Breadcrumb">
+          <ol className="list-none p-0 inline-flex">
+            <li className="flex items-center">
               <Link to="/discussion/home">Home</Link>
               <svg
-                class="fill-current w-3 h-3 mx-3"
+                className="fill-current w-3 h-3 mx-3"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 320 512"
               >
@@ -32,8 +159,8 @@ export default function TheQuestion() {
               </svg>
             </li> */}
             <li>
-              <Link to="#" class="text-gray-500" aria-current="page">
-                Comparing Different Excel Permutations
+              <Link to="/" className="text-gray-500" aria-current="page">
+                {posts.title}
               </Link>
             </li>
           </ol>
@@ -53,9 +180,9 @@ export default function TheQuestion() {
                             mr-1 md:mr-2 mb-2 px-2 md:px-4 py-1 
                             opacity-90 hover:opacity-100"
           >
-            Programming
+            {posts.category}
           </Link>
-          <p className="text-2xl">Comparing Different Excel Permutations</p>
+          <p className="text-2xl">{posts.title}</p>
           <div className="inline-block space-y-5 lg:flex justify-start lg:justify-between space-x-3 mt-2 text-sm ">
             <div>
               <Link to="#" className="flex items-center">
@@ -66,10 +193,10 @@ export default function TheQuestion() {
                 />
 
                 <div className="text-gray-900 font-bold text-sm hover:underline hover:text-blue-500 transition duration-200 ease-in-out">
-                  Rohaizad Maznan
+                  {posts.postOwner}
                 </div>
                 <div className="text-gray-900 text-sm opacity-50">
-                  &nbsp;&mdash;&nbsp; a few minute ago
+                  &nbsp;&mdash;&nbsp; {moment(posts.createdAt).fromNow()}
                 </div>
               </Link>
             </div>
@@ -77,7 +204,14 @@ export default function TheQuestion() {
               <p className="text-sm">
                 Viewed{" "}
                 <span className="hover:underline cursor-pointer text-blue-500 transition duration-200 ease-in-out">
-                  1902
+                  {posts.views}
+                </span>{" "}
+                times
+              </p>
+              <p className="text-sm">
+                Voted{" "}
+                <span className="hover:underline cursor-pointer text-blue-500 transition duration-200 ease-in-out">
+                  {posts.votes}
                 </span>{" "}
                 times
               </p>
@@ -87,71 +221,94 @@ export default function TheQuestion() {
         <hr className="my-5" />
         <div className="inline-block space-y-5 justify-start lg:flex">
           <div className="w-full lg:w-3/4 pr-5">
-            <p>
-              I have 4 subjects that can be graded i.e. Math's, Science,
-              English, Geography. Each subject is graded on a proficiency scale
-              from 1-5, i.e PS1, PS2, PS3, PS4, PS5, where PS2 is better than
-              PS1, PS3 is better than PS2 and so on
-            </p>
+            <p>{posts.content}</p>
           </div>
           <div className="w-full lg:w-1/4 bg-gray-100 p-3 shadow-md">
             <p className="font-bold">Attachment</p>
             <hr className="my-2" />
-            <Link className="text-blue-500 hover:text-blue-600 hover:underline cursor-pointer">
+            <Link
+              to="/"
+              className="text-blue-500 hover:text-blue-600 hover:underline cursor-pointer"
+            >
               Attachment.pdf
             </Link>
           </div>
         </div>
         <hr className="my-5" />
         <div className="text-sm flex justify-start space-x-4 opacity-50 hover:opacity-100 transition duration-200 ease-in-out">
-          <Link
-            to="/"
+          <span
+            onClick={postVote}
             className="hover:text-blue-600 hover:underline cursor-pointer"
           >
-            Share
-          </Link>
+            Vote
+          </span>
           <Link
             to="/"
             className="hover:text-blue-600 hover:underline cursor-pointer"
           >
             Edit
           </Link>
-          <Link
-            to="/"
+          {/* {
+            hide === true ? <span onClick={postHide}>Hide</span> : <span onClick={postShow}>Show</span>
+          } */}
+          <span
+            onClick={postHide}
             className="hover:text-blue-600 hover:underline cursor-pointer"
           >
             Hide
-          </Link>
-          <Link
-            to="/"
+          </span>
+          <span
+            onClick={postShow}
+            className="hover:text-blue-600 hover:underline cursor-pointer"
+          >
+            Show
+          </span>
+          <span
+            onClick={postAnswered}
             className="hover:text-blue-600 hover:underline cursor-pointer"
           >
             Answered
-          </Link>
+          </span>
+          <span
+            onClick={postNotAnswered}
+            className="hover:text-blue-600 hover:underline cursor-pointer"
+          >
+            No answer
+          </span>
         </div>
       </div>
+
+      <Comment id={id} />
 
       <div
         className="w-full md:mr-10 p-5 mt-6 mb-10 lg:mt-0 text-gray-900 leading-normal bg-white shadow-lg border-rounded"
         data-aos="fade-up"
         data-aos-delay="350"
       >
-        <div>
-          <p>Your Answer</p>
-          <textarea
-            rows="10"
-            className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
-          ></textarea>
-        </div>
-        <div className="mt-5">
-          <Link
-            to="/discussion/successfully-submit"
-            className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600"
-          >
-            <span className="text-sm">Post Your Answer</span>
-          </Link>
-        </div>
+        <form onSubmit={handleComment}>
+          <div>
+            <p>Your Answer</p>
+            <textarea
+              isrequired="true"
+              id="answerQuestion"
+              value={answerQuestion}
+              onChange={({ target }) => setAnswerQuestion(target.value)}
+              rows="10"
+              className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
+            ></textarea>
+          </div>
+          <div className="mt-5">
+            <button
+              type="submit"
+              className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600"
+            >
+              <span className="text-sm">Post Your Answer</span>
+            </button>
+          </div>
+        </form>
       </div>
     </>
   );
 }
+
+export default withRouter(TheQuestion)

@@ -11,6 +11,7 @@ export default function QuestionList({
   postOwner,
   date,
   avatar,
+  id,
 }) {
   return (
     <div>
@@ -23,18 +24,53 @@ export default function QuestionList({
               <div className="inline-block font-medium text-sm">Votes</div>
             </div>
 
-            <Link
-              to="/"
-              className="grid grid-rows-2 mx-auto mb-3 py-1 w-4/5 2lg:w-3/5 rounded-md bg-green-400"
-            >
-              <div className="inline-block font-medium text-2xl text-white">
-                {answer}
-              </div>
+            {answer === true ? (
+              <>
+                <span className="grid grid-rows-2 mx-auto mb-3 py-3 w-4/5 2lg:w-3/5 rounded-md bg-green-400">
+                  <div className="flex justify-center font-medium text-2xl text-white">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>{" "}
+                  </div>
 
-              <div className="inline-block font-medium text-white mx-1 text-sm lg:text-md">
-                Answers
-              </div>
-            </Link>
+                  <div className="inline-block font-medium text-white mx-1 text-sm lg:text-md">
+                    Answered
+                  </div>
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="grid grid-rows-2 text-gray-700 mx-auto mb-3 py-3 w-4/5 2lg:w-3/5 rounded-md bg-white border">
+                  <div className="flex justify-center font-medium text-2xl ">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clipRule="evenodd"
+                      />
+                    </svg>{" "}
+                  </div>
+
+                  <div className="inline-block font-medium mx-1 text-sm lg:text-md">
+                    No answer
+                  </div>
+                </span>
+              </>
+            )}
 
             <div className="grid my-3">
               <span className="inline-block font-bold text-xs">
@@ -55,7 +91,22 @@ export default function QuestionList({
                 <div className="mr-2">
                   <div className="inline-block font-light capitalize">
                     <i className="uil uil-check-circle mr-1"></i>
-                    <span className="text-sm">{answer} Answers</span>
+                    <span className="text-sm">
+                      {/* {answer} */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>{" "}
+                      Answers
+                    </span>
                   </div>
                 </div>
                 <div className="mr-2">
@@ -82,13 +133,16 @@ export default function QuestionList({
 
             <div className="mt-2">
               <Link
-                to="/discussion/the-question"
+                to={`/discussion/${tag}/${id}`}
                 className="sm:text-sm md:text-md lg:text-lg text-gray-700 font-bold hover:underline"
+                // onClick={() => postView({ id })}
               >
                 {title}
               </Link>
 
-              <p className="mt-2 text-gray-600 text-sm md:text-md">{content}</p>
+              <p className="mt-2 text-gray-600 text-sm md:text-md">
+                {content.substring(0, 250) + "..."}
+              </p>
             </div>
 
             <div className="grid grid-cols-2 mt-4 my-auto">

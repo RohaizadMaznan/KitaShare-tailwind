@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
+import fire from "../../../auth/fbAuth";
 import Avatar from "./Avatar";
 
 export default function Header() {
   const currentRoute = useHistory().location.pathname.toLowerCase();
   const [top, setTop] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  fire.auth().onAuthStateChanged((user) => {
+    if (user) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  });
 
   // detect whether user has scrolled the page down by 10px
   useEffect(() => {
@@ -127,39 +137,69 @@ export default function Header() {
                 Discussion
               </Link>
             </li>
-            <li className="mr-3 py-2 lg:py-0">
-              <Link
-                to="/signin"
-                className="text-gray-900 hover:text-gray-900 px-3 py-2 flex items-center transition duration-150 ease-in-out hover:bg-gray-200 rounded-md"
-              >
-                Sign in
-              </Link>
-            </li>
-            <li className="mr-3 py-2 lg:py-0">
-              <Link
-                to="/signin"
-                className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600 ml-3"
-              >
-                <svg
-                  className="w-5 h-5 text-white flex-shrink-0 mr-2"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                  />
-                </svg>
-                <span>Upload</span>
-              </Link>
-            </li>
-            <li className="mr-3 py-2 lg:py-0">
-              <Avatar />
-            </li>
+
+            {!loggedIn ? (
+              <>
+                <li className="mr-3 py-2 lg:py-0">
+                  <Link
+                    to="/signin"
+                    className="text-gray-900 hover:text-gray-900 px-3 py-2 flex items-center transition duration-150 ease-in-out hover:bg-gray-200 rounded-md"
+                  >
+                    Sign in
+                  </Link>
+                </li>
+                <li className="mr-3 py-2 lg:py-0">
+                  <Link
+                    to="/signin"
+                    className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600 ml-3"
+                  >
+                    <svg
+                      className="w-5 h-5 text-white flex-shrink-0 mr-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                      />
+                    </svg>
+                    <span>Upload</span>
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="mr-3 py-2 lg:py-0">
+                  <Link
+                    to="/student/upload-file"
+                    className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600 ml-3"
+                  >
+                    <svg
+                      className="w-5 h-5 text-white flex-shrink-0 mr-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                      />
+                    </svg>
+                    <span>Upload</span>
+                  </Link>
+                </li>
+                <li>
+                  <Avatar />
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

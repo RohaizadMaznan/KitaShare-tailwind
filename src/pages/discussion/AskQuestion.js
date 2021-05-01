@@ -1,8 +1,68 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import fire from "../../auth/fbAuth";
+import { withRouter } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import PastAnswerCard from "../../components/discussion/PastAnswerCard";
+import { useToasts } from "react-toast-notifications";
 
-export default function AskQuestion() {
+function AskQuestion({history}) {
+  // const [resetForm, setResetForm] = useState("");
+  const { addToast } = useToasts();
+
+  const [tag, setTag] = useState("");
+  const [question, setQuestion] = useState("");
+  const [content, setContent] = useState("");
+  // const [urlQuestion, setUrlQuestion] = useState("");
+  const [userId, setUserId] = useState();
+  const [firstName, setFirstName] = useState();
+
+  fire.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // Get document users from firestore based on user.uid
+      fire.firestore().collection("users").doc(user.uid).get()
+      .then((doc) => {
+        // console.log("Document data:", doc.data().firstName)
+        setFirstName(doc.data().firstName)
+      })
+      
+      setUserId(user.uid);
+      //setRole(user.role)
+    } else {
+      console.log("none")
+    }
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    fire
+      .firestore()
+      .collection("posts")
+      .add({
+        userId: userId,
+        postOwner: firstName,
+        createdAt: new Date().toISOString(),
+        category: tag,
+        title: question,
+        content: content,
+        urlQuestion: "none",
+        onHide: "false",
+        onMarkAnswered: "false",
+        views: 0,
+        votes: 0,
+      })
+      .then(()=> {
+        // console.log("Success post")
+        // window.location.reload(true)
+        addToast("Question has successfully posted in the discussion!", { appearance: "success", autoDismiss: true });
+        history.push("/discussion/successfully-submit")
+      })
+      .catch(err => {
+        const message = err.message;
+        addToast(message, { appearance: "error", autoDismiss: true });
+      })
+  };
+
   return (
     <>
       <div
@@ -15,11 +75,11 @@ export default function AskQuestion() {
         </div>
         <hr className="border-b my-5 border-gray-200" />
         <div>
-          <form action="#" method="post">
+          <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <label
                 className="block text-gray-900 text-sm font-bold mb-2"
-                for=""
+                htmlFor=""
               >
                 Title
               </label>
@@ -30,15 +90,18 @@ export default function AskQuestion() {
               <input
                 className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
                 type="text"
-                name="field-name"
+                id="question"
+                value={question}
+                onChange={({ target }) => setQuestion(target.value)}
                 placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+                isrequired="true"
               />
             </div>
 
             <div className="mb-6">
               <label
                 className="block text-gray-900 text-sm font-bold mb-2"
-                for=""
+                htmlFor=""
               >
                 Body
               </label>
@@ -47,6 +110,11 @@ export default function AskQuestion() {
                 question
               </p>
               <textarea
+                isrequired="true"
+                id="content"
+                value={content}
+                onChange={({ target }) => setContent(target.value)}
+                placeholder="Write here..."
                 rows="10"
                 className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
               ></textarea>
@@ -55,25 +123,31 @@ export default function AskQuestion() {
             <div className="mb-6">
               <label
                 className="block text-gray-900 text-sm font-bold mb-2"
-                for=""
+                htmlFor=""
               >
                 Category
               </label>
               <p className="text-sm">
                 Pick one tag category suit your question
               </p>
-              <select className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none">
-                <option>Programming</option>
-                <option>Exercise</option>
+              <select
+                isrequired="true"
+                id="select"
+                value={tag}
+                onChange={({ target }) => setTag(target.value)}
+                className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
+              >
+                <option value="programming">Programming</option>
+                <option value="exercise">Exercise</option>
               </select>
             </div>
             <div className="mb-2">
-              <Link
-                to="/discussion/successfully-submit"
+              <button
+                type="submit"
                 className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600"
               >
                 <span className="text-sm">Submit your question</span>
-              </Link>
+              </button>
             </div>
           </form>
         </div>
@@ -88,3 +162,5 @@ export default function AskQuestion() {
     </>
   );
 }
+
+export default withRouter(AskQuestion)

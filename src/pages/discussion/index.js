@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import fire from "../../auth/fbAuth";
 import { Link } from "react-router-dom";
 import PastAnswerCard from "../../components/discussion/PastAnswerCard";
 import QuestionList from "../../components/discussion/QuestionList";
+import moment from "moment";
 
-export default function index() {
+function Index() {
+  const [posts, setPosts] = useState([]);
+  // const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const db = fire.firestore();
+      const data = await db
+        .collection("posts")
+        .orderBy("createdAt", "desc")
+        .get();
+      setPosts(
+        data.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        })
+      );
+      // setLoading(true);
+    };
+    fetchData();
+  }, []);
+
+  const postView = (postId) => {
+    // console.log("postView", postId);
+    const db = fire.firestore();
+    // console.log(db)
+    const postRef = db.collection("posts").doc(postId);
+
+    postRef.update({
+      views: fire.firestore.FieldValue.increment(1),
+    });
+  };
+
   return (
     <>
       <div
@@ -27,17 +60,32 @@ export default function index() {
         <hr className="border-b my-5 border-gray-200" />
         <div>
           <div>
-            <QuestionList 
-                title="Comparing Different Excel Permutations"
-                content="I have 4 subjects that can be graded i.e. Math's, Science, English, Geography. Each subject is graded on a proficiency scale from 1-5, i.e PS1, PS2, PS3, PS4, PS5, where PS2 is better than PS1, PS3 is better than PS2 and so on..."
-                tag="Programming"
-                view="1902"
-                vote="52"
-                answer="12"
-                postOwner="Rohaizad Maznan"
-                avatar="https://miro.medium.com/max/3150/1*X6IDI9LqATYpd9KYbTWwHg.jpeg"
-                date="a few mins ago ago"
-            />
+            {!posts ? (
+              <p>Loading...</p>
+            ) : (
+              posts.map((e) => (
+                <span onClick={() => postView(e.id)} key={e.id}>
+                  {e.onHide === true ? (
+                    ""
+                  ) : (
+                    <QuestionList
+                      id={e.id}
+                      title={e.title}
+                      content={e.content}
+                      tag={e.category}
+                      view={e.views}
+                      vote={e.votes}
+                      answer={e.onMarkAnswered}
+                      onHide={e.onHide}
+                      postOwner={e.postOwner}
+                      avatar="https://miro.medium.com/max/3150/1*X6IDI9LqATYpd9KYbTWwHg.jpeg"
+                      // date={moment(e.createdAt).format("LLL")}
+                      date={moment(e.createdAt).fromNow()}
+                    />
+                  )}
+                </span>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -51,3 +99,5 @@ export default function index() {
     </>
   );
 }
+
+export default Index;

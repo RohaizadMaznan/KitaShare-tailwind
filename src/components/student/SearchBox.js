@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 export default function SearchBox() {
   return (
@@ -11,12 +12,14 @@ export default function SearchBox() {
             name="search"
             placeholder="Search for handnote document"
           />
-          <button
-            type="submit"
-            className="btn-sm bg-blue-500 text-white absolute right-0 top-0 mt-5 mr-4"
-          >
-            Search
-          </button>
+          <Link to="/search">
+            <button
+              type="submit"
+              className="btn-sm bg-blue-500 text-white absolute right-0 top-0 mt-5 mr-4"
+            >
+              Search
+            </button>
+          </Link>
         </form>
       </div>
     </>

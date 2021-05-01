@@ -1,7 +1,69 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import fire from "../auth/fbAuth";
+import { Link, withRouter } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 
-function SignUp() {
+function SignUp({ history }) {
+  // Sign up process
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passConf, setPassConf] = useState("");
+  const [universiti, setUniversiti] = useState("");
+
+  const { addToast } = useToasts();
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
+    const noImg = "no-img.png";
+
+    if (password !== passConf) {
+      const message = "Password and password confirmation does not match";
+      addToast(message, {
+        appearance: "warning",
+        autoDismiss: true,
+      });
+      return null;
+    }
+
+    await fire
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        addToast("Successfully register", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+        fire
+          .firestore()
+          .collection("users")
+          .doc(user.user.uid)
+          .set({
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            educationInstitute: universiti,
+            role: "student",
+            userProfilePicture: `https://firebasestorage.googleapis.com/v0/b/kitashare-1653e.appspot.com/o/${noImg}?alt=media`,
+            createdAt: new Date().toISOString(),
+            agreement: true,
+          });
+        history.push("/student/dashboard");
+      })
+      .catch((err) => {
+        const message = err.message;
+        addToast(message, { appearance: "error", autoDismiss: true });
+      });
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      setPassConf("");
+      setUniversiti("");
+  };
+
   return (
     <>
       <section className="bg-gradient-to-b from-gray-100 to-white">
@@ -16,20 +78,61 @@ function SignUp() {
 
             {/* Form */}
             <div className="max-w-sm mx-auto">
-              <form>
+              <form onSubmit={handleSignup}>
+                <div className="flex flex-wrap -mx-3 mb-4">
+                  <div className="w-full md:w-1/2 px-3">
+                    <label
+                      className="block text-gray-800 text-sm font-medium mb-1"
+                      htmlFor="name"
+                    >
+                      First Name <span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      id="firstName"
+                      value={firstName}
+                      onChange={({ target }) => setFirstName(target.value)}
+                      aria-describedby="firstName-helper-text"
+                      type="text"
+                      className="form-input w-full text-gray-800"
+                      placeholder="Rohaizad"
+                      required
+                    />
+                  </div>
+                  <div className="w-full md:w-1/2 px-3">
+                    <label
+                      className="block text-gray-800 text-sm font-medium mb-1"
+                      htmlFor="name"
+                    >
+                      Last Name <span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      id="lastName"
+                      value={lastName}
+                      aria-describedby="lastName-helper-text"
+                      onChange={({ target }) => setLastName(target.value)}
+                      type="text"
+                      className="form-input w-full text-gray-800"
+                      placeholder="Maznan"
+                      required
+                    />
+                  </div>
+                </div>
                 <div className="flex flex-wrap -mx-3 mb-4">
                   <div className="w-full px-3">
                     <label
                       className="block text-gray-800 text-sm font-medium mb-1"
                       htmlFor="name"
                     >
-                      Name <span className="text-red-600">*</span>
+                      Email <span className="text-red-600">*</span>
                     </label>
                     <input
-                      id="name"
-                      type="text"
+                      id="email"
+                      value={email}
+                      aria-describedby="email-helper-text"
+                      onChange={({ target }) => setEmail(target.value)}
+                      type="email"
                       className="form-input w-full text-gray-800"
-                      placeholder="Enter your name"
+                      placeholder="your-email@email.com"
                       required
                     />
                   </div>
@@ -40,13 +143,16 @@ function SignUp() {
                       className="block text-gray-800 text-sm font-medium mb-1"
                       htmlFor="email"
                     >
-                      Email <span className="text-red-600">*</span>
+                      Password <span className="text-red-600">*</span>
                     </label>
                     <input
-                      id="email"
-                      type="email"
+                      id="password"
+                      value={password}
+                      aria-describedby="password-helper-text"
+                      onChange={({ target }) => setPassword(target.value)}
+                      type="password"
                       className="form-input w-full text-gray-800"
-                      placeholder="Enter your email address"
+                      placeholder="Password"
                       required
                     />
                   </div>
@@ -57,33 +163,58 @@ function SignUp() {
                       className="block text-gray-800 text-sm font-medium mb-1"
                       htmlFor="password"
                     >
-                      Password <span className="text-red-600">*</span>
+                      Confirm Password <span className="text-red-600">*</span>
                     </label>
                     <input
-                      id="password"
+                      id="passConf"
+                      value={passConf}
+                      aria-describedby="passConf-helper-text"
+                      onChange={({ target }) => setPassConf(target.value)}
                       type="password"
                       className="form-input w-full text-gray-800"
-                      placeholder="Enter your password"
+                      placeholder="Confirm password"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-wrap -mx-3 mb-4">
+                  <div className="w-full px-3">
+                    <label
+                      className="block text-gray-800 text-sm font-medium mb-1"
+                      htmlFor="name"
+                    >
+                      I study at <span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      id="universiti"
+                      value={universiti}
+                      onChange={({ target }) => setUniversiti(target.value)}
+                      type="text"
+                      className="form-input w-full text-gray-800"
+                      placeholder="e.g Universiti Teknologi Malaysia"
                       required
                     />
                   </div>
                 </div>
                 <div className="flex flex-wrap -mx-3 mt-6">
                   <div className="w-full px-3">
-                    <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
+                    <button
+                      type="submit"
+                      className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+                    >
                       Sign up
                     </button>
                   </div>
                 </div>
                 <div className="text-sm text-gray-500 text-center mt-3">
                   By creating an account, you agree to the{" "}
-                  <a className="underline" href="#0">
+                  <Link to="/documentation/terms-and-condition" className="underline">
                     terms & conditions
-                  </a>
+                  </Link>
                   , and our{" "}
-                  <a className="underline" href="#0">
+                  <Link to="/documentation/agreement-of-privacy" className="underline">
                     privacy policy
-                  </a>
+                  </Link>
                   .
                 </div>
               </form>
@@ -99,7 +230,7 @@ function SignUp() {
                 ></div>
               </div>
               <form>
-                <div className="flex flex-wrap -mx-3 mb-3">
+                {/* <div className="flex flex-wrap -mx-3 mb-3">
                   <div className="w-full px-3">
                     <button className="btn px-0 text-white bg-gray-900 hover:bg-gray-800 w-full relative flex items-center">
                       <svg
@@ -114,7 +245,7 @@ function SignUp() {
                       </span>
                     </button>
                   </div>
-                </div>
+                </div> */}
                 <div className="flex flex-wrap -mx-3">
                   <div className="w-full px-3">
                     <button className="btn px-0 text-white bg-red-600 hover:bg-red-700 w-full relative flex items-center">
@@ -149,4 +280,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default withRouter(SignUp);
