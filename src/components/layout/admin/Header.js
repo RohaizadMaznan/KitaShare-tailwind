@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import fire from "../../../auth/fbAuth";
-import Avatar from "../documentation/Avatar";
+import Avatar from "../admin/Avatar";
 
 export default function Header() {
   const currentRoute = useHistory().location.pathname.toLowerCase();

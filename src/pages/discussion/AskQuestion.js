@@ -1,9 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import fire from "../../auth/fbAuth";
 import { withRouter } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import PastAnswerCard from "../../components/discussion/PastAnswerCard";
 import { useToasts } from "react-toast-notifications";
+import { AuthContext } from "../../auth/Auth";
 
 function AskQuestion({history}) {
   // const [resetForm, setResetForm] = useState("");
@@ -62,6 +64,12 @@ function AskQuestion({history}) {
         addToast(message, { appearance: "error", autoDismiss: true });
       })
   };
+
+  const { currentUser } = useContext(AuthContext);
+
+  if(!currentUser) {
+    return <Redirect to="/" />
+  }
 
   return (
     <>

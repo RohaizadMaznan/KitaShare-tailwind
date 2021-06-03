@@ -5,6 +5,7 @@ import PastAnswerCard from "../../components/discussion/PastAnswerCard";
 import QuestionList from "../../components/discussion/QuestionList";
 import moment from "moment";
 import Meta from "../../components/layout/meta/Meta";
+import '../../css/discussion.css'
 
 function Index() {
   const [posts, setPosts] = useState([]);

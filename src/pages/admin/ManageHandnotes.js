@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import fire from "../../auth/fbAuth";
 import { Redirect } from "react-router-dom";
 import Meta from "../../components/layout/meta/Meta";
-import UploadTable from "../../components/student/UploadTable";
+import AllHandnotesTable from "../../components/admin/AllHandnotesTable";
 import { AuthContext } from "../../auth/Auth";
 
 export default function MyUpload() {
@@ -43,13 +43,13 @@ export default function MyUpload() {
 
   const { currentUser } = useContext(AuthContext);
 
-  if(!currentUser) {
-    return <Redirect to="/" />
+  if (!currentUser) {
+    return <Redirect to="/" />;
   }
 
   return (
     <>
-    <Meta title="My Uploads & Handnotes | KitaShare Web Application and OCR" />
+      <Meta title="My Uploads & Handnotes | KitaShare Web Application and OCR" />
       <div
         className="w-full lg:max-h-screen p-5 mt-6 lg:mt-0 text-gray-900 leading-normal rounded-md"
         data-aos="fade-up"
@@ -62,7 +62,8 @@ export default function MyUpload() {
             <thead>
               <tr className="rounded-lg bg-gray-200 text-sm font-medium text-gray-700">
                 <th className="w-10/12 px-4 py-2 text-left">Name</th>
-                <th className="w-1/12 px-4 py-2 ">Anonymous</th>
+                <th className="w-1/12 px-4 py-2 ">Owner</th>
+                <th className="w-1/12 px-4 py-2 ">Action</th>
                 <th className="w-1/12 px-4 py-2 ">Share</th>
               </tr>
             </thead>
@@ -70,17 +71,14 @@ export default function MyUpload() {
               {/* {!uploads && <>No post found!</>} */}
               {uploads.map((e) => (
                 <React.Fragment key={e.id}>
-                  {e.userId === userId ? (
-                    <>
-                      <UploadTable
-                        fileShowHide={e.onHide}
-                        id={e.id}
-                        title={e.fileTitle}
-                      />
-                    </>
-                  ) : (
-                    ""
-                  )}
+                  <>
+                    <AllHandnotesTable
+                      fileShowHide={e.onHide}
+                      id={e.id}
+                      title={e.fileTitle}
+                      owner={e.postOwner}
+                    />
+                  </>
                 </React.Fragment>
               ))}
             </tbody>

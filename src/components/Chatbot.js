@@ -8,7 +8,7 @@ function GoToDocumentation(){
 }
 
 function GoToUploadFile(){
-  window.open('/upload', "_self");
+  window.open('/student/upload-file', "_self");
   return <p>Go to upload file</p>
 }
 

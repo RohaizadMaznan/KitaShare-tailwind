@@ -60,7 +60,7 @@ function UploadFormSubmit({ ocrText, history }) {
         // console.log("Success a file post");
         // window.location.reload(true)
         addToast("Success! You have upload the handnote.", { appearance: "success", autoDismiss: true });
-        history.push("/student/my-upload")
+        history.push("/")
       })
       .catch((err) => {
         const message = err.message;

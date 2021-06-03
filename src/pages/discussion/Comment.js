@@ -103,7 +103,7 @@ export default function Comment({ id }) {
                         {e.postOwner}
                       </div>
                       <div className="text-gray-900 text-sm opacity-50">
-                        &nbsp;&mdash;&nbsp; {moment(e.createdAt).startOf('hour').fromNow()}
+                        &nbsp;&mdash;&nbsp; {moment(e.createdAt).fromNow()}
                       </div>
                     </Link>
                   </div>

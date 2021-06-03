@@ -1,9 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, Redirect } from "react-router-dom";
 import Meta from "../../components/layout/meta/Meta";
 import StepCard from "../../components/upload/StepCard";
+import { AuthContext } from "../../auth/Auth";
 
 export default function Upload() {
+
+  const { currentUser } = useContext(AuthContext);
+
+  if(!currentUser) {
+    return <Redirect to="/" />
+  }
+
   return (
     <>
     <Meta title="Onboard to Upload using OCR | KitaShare Web Application and OCR" />
@@ -23,17 +31,8 @@ export default function Upload() {
           />
 
           <StepCard
-            image={require("../../images/fill-img.svg")}
-            title="Fill form fields"
-            description="The latest OCR API Node.JS wrapper is from user DavideViolante. It
-              allows you to specify the OCR Space API endpoints (Free and PRO)."
-            dataAos="zoom-y-out"
-            dataAosDelay="450"
-          />
-
-          <StepCard
             image={require("../../images/celebrate-img.svg")}
-            title="Convert"
+            title="Start Now"
             description="The latest OCR API Node.JS wrapper is from user DavideViolante. It
               allows you to specify the OCR Space API endpoints (Free and PRO)."
             dataAos="zoom-y-out"

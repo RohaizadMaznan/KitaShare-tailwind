@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import fire from "../../../auth/fbAuth";
-import Avatar from "./Avatar";
+import StudentAvatar from "../documentation/Avatar";
+import AdminAvatar from "../admin/Avatar";
 
 export default function Header() {
   const currentRoute = useHistory().location.pathname.toLowerCase();
   const [top, setTop] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
+  const searchInputRef = useRef(null);
+  const history = useHistory();
 
   fire.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -24,6 +27,19 @@ export default function Header() {
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
   }, [top]);
+
+  const search = (e) => {
+    e.preventDefault();
+    const doc = searchInputRef.current.value;
+
+    if (!doc) return;
+
+    history.push(`/search?doc=${doc}`);
+    // window.location.reload()
+    // router.push(`/search?doc=${doc}`);
+  };
+
+  let user = fire.auth().currentUser;
 
   return (
     <header
@@ -92,25 +108,29 @@ export default function Header() {
           id="nav-content"
         >
           <div className="flex-1 w-full mx-auto max-w-sm content-center py-4 lg:py-0">
-            <div className="relative pull-right pl-4 pr-4 md:pr-0">
-              <input
-                type="search"
-                placeholder="Search"
-                className="w-full h-10 rounded-full bg-gray-100 text-sm text-gray-800 transition border focus:outline-none focus:border-blue-500 py-1 px-2 pl-10 appearance-none leading-normal"
-              />
-              <div
-                className="absolute search-icon"
-                style={{ top: "0.7rem", left: "1.75rem" }}
-              >
-                <svg
-                  className="fill-current pointer-events-none text-gray-800 w-4 h-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
+            <form onSubmit={search}>
+              <div className="relative pull-right pl-4 pr-4 md:pr-0">
+                <input
+                  ref={searchInputRef}
+                  type="search"
+                  placeholder="Search"
+                  className="w-full h-10 rounded-full bg-gray-100 text-sm text-gray-800 transition border focus:outline-none focus:border-blue-500 py-1 px-2 pl-5 appearance-none leading-normal"
+                />
+                <button
+                  type="submit"
+                  className="hidden absolute left-0"
+                  style={{ top: "0.7rem", left: "1.75rem" }}
                 >
-                  <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
-                </svg>
+                  <svg
+                    className="fill-current pointer-events-none text-gray-800 w-4 h-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
+                  </svg>
+                </button>
               </div>
-            </div>
+            </form>
           </div>
           <ul className="list-reset lg:flex justify-end items-center">
             <li className="mr-3 py-2 lg:py-0">
@@ -137,7 +157,18 @@ export default function Header() {
                 Discussion
               </Link>
             </li>
-
+            <li className="mr-3 py-2 lg:py-0">
+              <Link
+                className={`inline-block py-2 px-3 text-gray-900 no-underline transition duration-150 ease-in-out hover:bg-gray-200 rounded-md ${
+                  currentRoute.includes("search")
+                    ? "font-bold bg-gray-200"
+                    : " "
+                }`}
+                to="/search?"
+              >
+                Handnotes
+              </Link>
+            </li>
             {!loggedIn ? (
               <>
                 <li className="mr-3 py-2 lg:py-0">
@@ -196,7 +227,15 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Avatar />
+                  {user.email === "admin@kitashare.com" ? (
+                    <li>
+                      <AdminAvatar />
+                    </li>
+                  ) : (
+                    <li>
+                      <StudentAvatar />
+                    </li>
+                  )}
                 </li>
               </>
             )}

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import fire from "../auth/fbAuth";
 import provider from "../auth/AuthSetting";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import Meta from "../components/layout/meta/Meta";
+import { AuthContext } from "../auth/Auth";
 
 function SignIn({ history }) {
   const { addToast } = useToasts();
@@ -67,6 +68,12 @@ function SignIn({ history }) {
     setEmail("");
     setPassword("");
   };
+
+  const { currentUser } = useContext(AuthContext);
+
+  if(currentUser) {
+    return <Redirect to="/" />
+  }
 
   const signInWithGoogle = (e) => {
     e.preventDefault();

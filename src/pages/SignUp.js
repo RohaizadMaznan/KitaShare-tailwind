@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import fire from "../auth/fbAuth";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import Meta from "../components/layout/meta/Meta";
+import { AuthContext } from "../auth/Auth";
 
 function SignUp({ history }) {
   // Sign up process
@@ -64,6 +65,12 @@ function SignUp({ history }) {
     setPassConf("");
     setUniversiti("");
   };
+
+  const { currentUser } = useContext(AuthContext);
+
+  if(currentUser) {
+    return <Redirect to="/" />
+  }
 
   return (
     <>

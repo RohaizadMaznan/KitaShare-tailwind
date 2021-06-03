@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import fire from "../../auth/fbAuth";
 import { Link, withRouter } from "react-router-dom";
-import Comment from "./Comment";
 import moment from "moment";
 import { useToasts } from "react-toast-notifications";
 import Meta from "../../components/layout/meta/Meta";
 
-function TheQuestion({ match, history }) {
+function HandnoteContent({ match, history }) {
   const { addToast } = useToasts();
   const [answerQuestion, setAnswerQuestion] = useState("");
   const [userId, setUserId] = useState();
@@ -19,7 +18,7 @@ function TheQuestion({ match, history }) {
   const id = match.params.id;
   // console.log(id);
 
-  const [posts, setPosts] = useState([]);
+  const [uploads, setUploads] = useState([]);
   // const [hide, setHide] = useState();
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -36,11 +35,11 @@ function TheQuestion({ match, history }) {
     const fetchData = async () => {
       const db = fire.firestore();
       const snapshot = await db
-        .collection("posts")
+        .collection("uploads")
         .doc(id)
         .get();
       const data = snapshot.data();
-      setPosts(data);
+      setUploads(data);
       // setHide(data.onHide)
     };
     fetchData();
@@ -49,10 +48,10 @@ function TheQuestion({ match, history }) {
 
   const postId = id;
   const db = fire.firestore();
-  const postRef = db.collection("posts").doc(postId);
+  const postRef = db.collection("uploads").doc(postId);
 
   const postVote = () => {
-    console.log("Post has upvote +1");
+    console.log("Upload has upvote +1");
     postRef.update({
       votes: fire.firestore.FieldValue.increment(1),
     });
@@ -106,50 +105,11 @@ function TheQuestion({ match, history }) {
     }
   });
 
-  // console.log("This is post uid:", userId)
-
-  const handleComment = (e) => {
-    e.preventDefault();
-
-    if (answerQuestion === "") {
-      const message = "Comment cannot be empty!";
-      addToast(message, {
-        appearance: "warning",
-        autoDismiss: true,
-      });
-      return null;
-    }
-
-    fire
-      .firestore()
-      .collection("posts")
-      .doc(id)
-      .collection("comments")
-      .add({
-        userId: userId,
-        postOwner: firstName,
-        createdAt: new Date().toISOString(),
-        postId: id,
-        comment: answerQuestion,
-      })
-      .then(() => {
-        // console.log(`Success comment the post ${id}`);
-        addToast("Comment posted!", {
-          appearance: "success",
-          autoDismiss: true,
-        });
-        window.location.reload();
-      })
-      .catch((err) => {
-        // console.log("Unsuccess comment");
-        const message = err.message;
-        addToast(message, { appearance: "error", autoDismiss: true });
-      });
-  };
-
   return (
     <>
-      <Meta title={`${posts.title} | KitaShare Web Application and OCR `} />
+      <Meta
+        title={`${uploads.fileTitle} | KitaShare Web Application and OCR `}
+      />
       <div
         className="w-full p-5 mt-6 lg:mt-0 text-gray-900 leading-normal border-rounded"
         data-aos="fade-up"
@@ -179,7 +139,7 @@ function TheQuestion({ match, history }) {
             </li> */}
             <li>
               <Link to="/" className="text-gray-500" aria-current="page">
-                {posts.title}
+                {uploads.fileTitle}
               </Link>
             </li>
           </ol>
@@ -199,9 +159,9 @@ function TheQuestion({ match, history }) {
                             mr-1 md:mr-2 mb-2 px-2 md:px-4 py-1 
                             opacity-90 hover:opacity-100"
           >
-            {posts.category}
+            Uploaded Handnotes
           </Link>
-          <p className="text-2xl">{posts.title}</p>
+          <p className="text-2xl">{uploads.fileTitle}</p>
           <div className="inline-block space-y-5 lg:flex justify-start lg:justify-between space-x-3 mt-2 text-sm ">
             <div>
               <Link to="#" className="flex items-center">
@@ -212,10 +172,10 @@ function TheQuestion({ match, history }) {
                 />
 
                 <div className="text-gray-900 font-bold text-sm hover:underline hover:text-blue-500 transition duration-200 ease-in-out">
-                  {posts.postOwner}
+                  {uploads.postOwner}
                 </div>
                 <div className="text-gray-900 text-sm opacity-50">
-                  &nbsp;&mdash;&nbsp; {moment(posts.createdAt).fromNow()}
+                  &nbsp;&mdash;&nbsp; {moment(uploads.createdAt).fromNow()}
                 </div>
               </Link>
             </div>
@@ -223,14 +183,14 @@ function TheQuestion({ match, history }) {
               <p className="text-sm">
                 Viewed{" "}
                 <span className="hover:underline cursor-pointer text-blue-500 transition duration-200 ease-in-out">
-                  {posts.views}
+                  {uploads.views}
                 </span>{" "}
                 times
               </p>
               <p className="text-sm">
                 Voted{" "}
                 <span className="hover:underline cursor-pointer text-blue-500 transition duration-200 ease-in-out">
-                  {posts.votes}
+                  {uploads.votes}
                 </span>{" "}
                 times
               </p>
@@ -240,7 +200,7 @@ function TheQuestion({ match, history }) {
         <hr className="my-5" />
         <div className="inline-block space-y-5 justify-start lg:flex">
           <div className="w-full pr-5">
-            <p>{posts.content}</p>
+            <p>{uploads.ocrTextCaptured}</p>
           </div>
           {/* <div className="w-full lg:w-1/4 bg-gray-100 p-3 shadow-md">
             <p className="font-bold">Attachment</p>
@@ -304,55 +264,17 @@ function TheQuestion({ match, history }) {
               </>
             )
           ) : (
-            <p></p>
-          )}
-        </div>
-      </div>
-
-      <Comment id={id} />
-
-      <div
-        className="w-full md:mr-10 p-5 mt-6 mb-10 lg:mt-0 text-gray-900 leading-normal bg-white shadow-lg border-rounded"
-        data-aos="fade-up"
-        data-aos-delay="350"
-      >
-        {loggedIn ? (
-          <>
-            <form onSubmit={handleComment}>
-              <div>
-                <p>Your Answer</p>
-                <textarea
-                  isrequired="true"
-                  id="answerQuestion"
-                  value={answerQuestion}
-                  onChange={({ target }) => setAnswerQuestion(target.value)}
-                  rows="10"
-                  className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
-                ></textarea>
-              </div>
-              <div className="mt-5">
-                <button
-                  type="submit"
-                  className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600"
-                >
-                  <span className="text-sm">Post Your Answer</span>
-                </button>
-              </div>
-            </form>
-          </>
-        ) : (
-          <>
             <p>
               <Link to="/signin" className="hover:underline text-blue-500">
                 Sign in{" "}
               </Link>{" "}
-              to post comment
+              to vote up
             </p>
-          </>
-        )}
+          )}
+        </div>
       </div>
     </>
   );
 }
 
-export default withRouter(TheQuestion);
+export default withRouter(HandnoteContent);

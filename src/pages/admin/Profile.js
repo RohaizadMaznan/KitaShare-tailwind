@@ -23,7 +23,7 @@ class Profile extends Component {
     const ref = fire
       .firestore()
       .collection("users")
-      .doc("0NpMc79cflONyWSH2ljOE9myfCz1");
+      .doc("uYzui7k4WiOPYcIrg2KweAtsu6I3");
     ref.get().then((doc) => {
       if (doc.exists) {
         const user = doc.data();

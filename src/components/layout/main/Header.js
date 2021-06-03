@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import fire from "../../../auth/fbAuth";
-import { Link } from "react-router-dom";
-import Avatar from "../documentation/Avatar";
+import { Link, useHistory } from "react-router-dom";
+import StudentAvatar from "../documentation/Avatar";
+import AdminAvatar from "../admin/Avatar";
 
 function Header() {
   const [top, setTop] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
+  const searchInputRef = useRef(null);
+  const history = useHistory();
 
   fire.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -23,6 +26,18 @@ function Header() {
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
   }, [top]);
+
+  const search = (e) => {
+    e.preventDefault();
+    const doc = searchInputRef.current.value;
+
+    if (!doc) return;
+
+    history.push(`/search?doc=${doc}`);
+    // router.push(`/search?doc=${doc}`);
+  };
+
+  let user = fire.auth().currentUser;
 
   return (
     <header
@@ -69,9 +84,10 @@ function Header() {
           <nav className="flex flex-grow">
             <ul className="flex flex-grow justify-end flex-wrap items-center">
               <li className="hidden md:block">
-                <form autoComplete="off">
+                <form autoComplete="off" onSubmit={search}>
                   <div className="relative text-gray-600">
                     <input
+                      ref={searchInputRef}
                       type="search"
                       name="search"
                       placeholder="Search"
@@ -131,9 +147,15 @@ function Header() {
                 </>
               ) : (
                 <>
-                  <li>
-                    <Avatar />
-                  </li>
+                  {user.email === "admin@kitashare.com" ? (
+                    <li>
+                      <AdminAvatar />
+                    </li>
+                  ) : (
+                    <li>
+                      <StudentAvatar />
+                    </li>
+                  )}
                 </>
               )}
             </ul>

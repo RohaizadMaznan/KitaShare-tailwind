@@ -95,7 +95,7 @@ function Avatar({ history }) {
           {show1 && (
             <ul className="p-2 w-40 border-r bg-white absolute rounded z-40 right-0 shadow mt-12 top-0 lg:-mr-12">
               <li className="cursor-pointer text-gray-600 dark:text-gray-400 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                <Link to="/student/dashboard">
+                <Link to="/admin/dashboard">
                   <div className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +121,7 @@ function Avatar({ history }) {
                 </Link>
               </li>
               <li className="cursor-pointer text-gray-600 dark:text-gray-400 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none flex items-center">
-                <Link to="/student/my-question">
+                <Link to="/admin/my-question">
                   <div className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +147,7 @@ function Avatar({ history }) {
                 </Link>
               </li>
               <li className="cursor-pointer text-gray-600 dark:text-gray-400 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none flex items-center">
-                <Link to="/student/my-upload">
+                <Link to="/admin/my-upload">
                   <div className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -173,7 +173,7 @@ function Avatar({ history }) {
                 </Link>
               </li>
               <li className="cursor-pointer text-gray-600 dark:text-gray-400 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                <Link to="/student/profile">
+                <Link to="/admin/profile">
                   <div className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

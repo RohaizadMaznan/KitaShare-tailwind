@@ -6,6 +6,7 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
 import "filepond/dist/filepond.min.css";
 import Meta from "../../components/layout/meta/Meta";
+// import { AuthContext } from "../../auth/Auth";
 
 registerPlugin(FilePondPluginImagePreview);
 
@@ -20,6 +21,7 @@ class UploadForm extends React.Component {
     this.pond = React.createRef();
     this.worker = React.createRef();
     this.updateProgressAndLog = this.updateProgressAndLog.bind(this);
+    // this.currentUser = React.createContext(AuthContext)
   }
 
   async doOCR(file) {
@@ -65,6 +67,12 @@ class UploadForm extends React.Component {
       logger: (m) => this.updateProgressAndLog(m),
     });
   }
+
+  // const { currentUser } = useContext(AuthContext);
+
+  // if(this.currentUser.) {
+  //   return <Redirect to="/" />
+  // }
 
   render() {
     return (

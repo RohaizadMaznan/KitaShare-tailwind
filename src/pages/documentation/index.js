@@ -102,7 +102,7 @@ export default function Documentation() {
         experience of students further. The objectives of the project are:
       </p>
       <div className="py-3 mx-5 leading-7">
-        <ol class="list-decimal">
+        <ol className="list-decimal">
           <li>
             To{" "}
             <span className="text-blue-500 underline">
