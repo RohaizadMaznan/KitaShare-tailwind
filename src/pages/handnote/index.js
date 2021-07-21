@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import fire from "../../auth/fbAuth";
 import { Link, withRouter } from "react-router-dom";
 import moment from "moment";
-import { useToasts } from "react-toast-notifications";
+// import { useToasts } from "react-toast-notifications";
 import Meta from "../../components/layout/meta/Meta";
 
 function HandnoteContent({ match, history }) {
-  const { addToast } = useToasts();
-  const [answerQuestion, setAnswerQuestion] = useState("");
+  // const { addToast } = useToasts();
+  // const [answerQuestion, setAnswerQuestion] = useState("");
   const [userId, setUserId] = useState();
   const [firstName, setFirstName] = useState();
 

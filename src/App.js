@@ -32,10 +32,13 @@ import Discussion from "./pages/discussion/index";
 import AskQuestion from "./pages/discussion/AskQuestion";
 import TheQuestion from "./pages/discussion/TheQuestion";
 import SuccessPostQuestion from "./pages/discussion/Success";
+
 import StudentProfile from "./pages/student/Profile";
 import MyQuestion from "./pages/student/MyQuestion";
 import MyUpload from "./pages/student/MyUpload";
 import Upload from "./pages/student/Upload";
+import UpdateUpload from "./pages/student/UpdateUpload";
+import UpdateQuestion from "./pages/student/UpdateQuestion";
 
 import AdminIndex from "./pages/admin/index";
 import ManageChatbot from "./pages/admin/ManageChatbot";
@@ -142,6 +145,8 @@ function App() {
               layout={SecondaryLayout}
               component={SuccessPostQuestion}
             />
+            
+
 
             <AppRoute
               path="/student/dashboard"
@@ -159,6 +164,11 @@ function App() {
               component={MyQuestion}
             />
             <AppRoute
+              path="/student/my-upload/update/:id"
+              layout={StudentLayout2}
+              component={UpdateUpload}
+            />
+            <AppRoute
               path="/student/my-upload"
               layout={StudentLayout2}
               component={MyUpload}
@@ -172,6 +182,11 @@ function App() {
               path="/student/start-upload"
               layout={SecondaryLayout}
               component={UploadForm}
+            />
+            <AppRoute
+              path="/student/:id/update"
+              layout={StudentLayout2}
+              component={UpdateQuestion}
             />
 
             {/* Search page */}

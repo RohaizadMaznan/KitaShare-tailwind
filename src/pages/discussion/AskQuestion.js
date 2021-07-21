@@ -8,16 +8,18 @@ import { useToasts } from "react-toast-notifications";
 import { AuthContext } from "../../auth/Auth";
 
 function AskQuestion({history}) {
-  // const [resetForm, setResetForm] = useState("");
-  const { addToast } = useToasts();
-
   const [tag, setTag] = useState("");
   const [question, setQuestion] = useState("");
   const [content, setContent] = useState("");
-  // const [urlQuestion, setUrlQuestion] = useState("");
   const [userId, setUserId] = useState();
   const [firstName, setFirstName] = useState();
 
+  // const [resetForm, setResetForm] = useState("");
+  const { addToast } = useToasts();
+
+  
+
+  // const [urlQuestion, setUrlQuestion] = useState("");
   fire.auth().onAuthStateChanged((user) => {
     if (user) {
       // Get document users from firestore based on user.uid

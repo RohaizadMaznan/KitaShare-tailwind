@@ -265,7 +265,7 @@ function TheQuestion({ match, history }) {
                   Vote
                 </span>
                 <Link
-                  to="/"
+                  to={`/discussion/update/${posts.category}/${id}`}
                   className="hover:text-blue-600 hover:underline cursor-pointer"
                 >
                   Edit

@@ -4,7 +4,7 @@ import Meta from "../components/layout/meta/Meta";
 import SearchResult from "../components/search/SearchResult";
 // import queryString from "query-string";
 import moment from "moment";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import algoliasearch from "algoliasearch/lite";
 import {
   InstantSearch,

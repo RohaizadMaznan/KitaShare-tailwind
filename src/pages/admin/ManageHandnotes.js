@@ -7,22 +7,6 @@ import { AuthContext } from "../../auth/Auth";
 
 export default function MyUpload() {
   const [uploads, setUploads] = useState([]);
-  const [userId, setUserId] = useState();
-
-  fire.auth().onAuthStateChanged((user) => {
-    if (user) {
-      // Get document users from firestore based on user.uid
-      fire
-        .firestore()
-        .collection("users")
-        .doc(user.uid)
-        .get();
-
-      setUserId(user.uid);
-    } else {
-      console.log("no auth found");
-    }
-  });
 
   useEffect(() => {
     const fetchData = async () => {

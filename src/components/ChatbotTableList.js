@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import fire from "../auth/fbAuth";
 import { useToasts } from "react-toast-notifications";
-import { Link } from "react-router-dom";
 
 export default function UploadTable({
   fileShowHide,
