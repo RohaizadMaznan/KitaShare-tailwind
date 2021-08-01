@@ -33,7 +33,7 @@ function Sidebar() {
             <Link
               to="/admin/profile"
               className={`block pl-4 align-middle text-gray-700 no-underline border-l-4 border-transparent ${
-                currentRoute.includes("/student/profile")
+                currentRoute.includes("/admin/profile")
                   ? "lg:border-blue-500 font-bold"
                   : " "
               }`}
@@ -58,7 +58,7 @@ function Sidebar() {
             <Link
               to="/admin/dashboard"
               className={`block px-5 py-2 align-middle text-gray-900 no-underline hover:text-blue-500 rounded-md ${
-                currentRoute.includes("/student/dashboard")
+                currentRoute.includes("/admin/dashboard")
                   ? "bg-blue-100 text-blue-700"
                   : " "
               }`}
@@ -94,7 +94,7 @@ function Sidebar() {
             <Link
               to="/admin/manage-chatbot"
               className={`block px-5 py-2 align-middle text-gray-900 no-underline hover:bg-blue-100 hover:text-blue-500 rounded-md ${
-                currentRoute.includes("/student/my-question")
+                currentRoute.includes("/admin/manage-chatbot")
                   ? "bg-blue-100 text-blue-700"
                   : " "
               }`}
@@ -126,7 +126,7 @@ function Sidebar() {
             <Link
               to="/admin/manage-handnotes"
               className={`block px-5 py-2 align-middle text-gray-900 no-underline hover:bg-blue-100 hover:text-blue-500 rounded-md ${
-                currentRoute.includes("/student/my-upload")
+                currentRoute.includes("/admin/manage-handnotes")
                   ? "bg-blue-100 text-blue-700"
                   : " "
               }`}
@@ -161,7 +161,7 @@ function Sidebar() {
             <Link
               to="/admin/my-question"
               className={`block px-5 py-2 align-middle text-gray-900 no-underline hover:bg-blue-100 hover:text-blue-500 rounded-md ${
-                currentRoute.includes("/student/my-question")
+                currentRoute.includes("/admin/my-question")
                   ? "bg-blue-100 text-blue-700"
                   : " "
               }`}
@@ -193,7 +193,7 @@ function Sidebar() {
             <Link
               to="/admin/my-upload"
               className={`block px-5 py-2 align-middle text-gray-900 no-underline hover:bg-blue-100 hover:text-blue-500 rounded-md ${
-                currentRoute.includes("/student/my-upload")
+                currentRoute.includes("/admin/my-upload")
                   ? "bg-blue-100 text-blue-700"
                   : " "
               }`}

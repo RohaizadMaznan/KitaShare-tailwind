@@ -107,7 +107,7 @@ export default function UploadTable({ title, id, fileShowHide }) {
     <>
       <tr className="hover:bg-gray-100 border-b border-gray-200 py-10">
         <td className="px-4 py-4 hover:text-blue-500 cursor-pointer">
-          {title}
+          <Link to={`/handnote/ocr/${id}`}>{title}</Link>
         </td>
         <td className="px-4 py-4 text-center flex justify-center">
           {/* <input
