@@ -74,6 +74,35 @@ export default function AllHandnotesTable({ title, id, fileShowHide, owner }) {
       });
   };
 
+  const onDelete = () => {
+    const uploadId = id;
+
+    confirmAlert({
+      title: "Confirm to delete?",
+      message: `Are you sure to do delete - ${title}`,
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            const db = fire.firestore();
+            db.collection("uploads")
+              .doc(uploadId)
+              .delete();
+            const message = `${title}, document removed.`;
+            addToast(message, {
+              appearance: "success",
+              autoDismiss: true,
+            });
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+
   return (
     <>
       {/* <table class="table-auto border-collapse w-full">
@@ -187,6 +216,7 @@ export default function AllHandnotesTable({ title, id, fileShowHide, owner }) {
               <span
                 className="hover:text-red-600 hover:underline cursor-pointer mx-1"
                 title="Permanently delete"
+                onClick={onDelete}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
