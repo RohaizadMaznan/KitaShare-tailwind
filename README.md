@@ -9,8 +9,8 @@ Check the live demo here 👉️ [https://kitashare.netlify.app/)
 ## Table of contents
 
 * [Usage](#usage)
-  * [Available Scripts](#available-scripts)
-    * [npm start](#npm-start)
+  * [Main Features](#available-scripts)
+    * [Optical Character Recognition (OCR)](#npm-start)
     * [npm test](#npm-test)
     * [npm run build](#npm-run-build)
     * [npm run eject](#npm-run-eject)
