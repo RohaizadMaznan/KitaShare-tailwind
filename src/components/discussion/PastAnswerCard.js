@@ -31,7 +31,7 @@ export default function PastAnswerCard() {
           {/* List of past answer questions - This will need to be loop through firestore later on */}
           {posts.map((e) => (
             <span key={e.id}>
-              { e.onMarkAnswered === true ? (
+              { e.onMarkAnswered === "true" ? (
                 <>
                   <PastAnswerList label={e.title} url={`/discussion/${e.category}/${e.id}`} />
                 </>

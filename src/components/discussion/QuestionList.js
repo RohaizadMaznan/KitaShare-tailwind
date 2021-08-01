@@ -24,7 +24,7 @@ export default function QuestionList({
               <div className="inline-block font-medium text-sm">Votes</div>
             </div>
 
-            {answer === true ? (
+            {answer === "true" ? (
               <>
                 <span className="grid grid-rows-2 mx-auto mb-3 py-3 w-4/5 2lg:w-3/5 rounded-md bg-green-400">
                   <div className="flex justify-center font-medium text-2xl text-white">

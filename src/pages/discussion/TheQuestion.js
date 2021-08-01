@@ -87,12 +87,22 @@ function TheQuestion({ match, history }) {
     postRef.update({
       onMarkAnswered: "true",
     });
+    const message = "Post has been answered! Congratulation!!";
+    addToast(message, {
+      appearance: "success",
+      autoDismiss: true,
+    });
   };
 
   const postNotAnswered = () => {
     console.log("Post has change to not answer.");
     postRef.update({
       onMarkAnswered: "false",
+    });
+    const message = "Post has change to not answer.";
+    addToast(message, {
+      appearance: "success",
+      autoDismiss: true,
     });
   };
 

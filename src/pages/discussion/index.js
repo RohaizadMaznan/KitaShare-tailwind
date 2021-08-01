@@ -83,7 +83,7 @@ function Index() {
             ) : (
               posts.map((e) => (
                 <span onClick={() => postView(e.id)} key={e.id}>
-                  {e.onHide === true ? (
+                  {e.onHide === "true" ? (
                     ""
                   ) : (
                     <QuestionList
