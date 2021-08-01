@@ -61,28 +61,38 @@ function TheQuestion({ match, history }) {
   const postHide = () => {
     console.log("Post is hiding");
     postRef.update({
-      onHide: true,
+      onHide: "true",
+    });
+    const message = "Post is hiding!";
+    addToast(message, {
+      appearance: "success",
+      autoDismiss: true,
     });
   };
 
   const postShow = () => {
     console.log("Post has show to public");
     postRef.update({
-      onHide: false,
+      onHide: "false",
+    });
+    const message = "Post has show to public.";
+    addToast(message, {
+      appearance: "success",
+      autoDismiss: true,
     });
   };
 
   const postAnswered = () => {
     console.log("Post has been answered! Congratulation");
     postRef.update({
-      onMarkAnswered: true,
+      onMarkAnswered: "true",
     });
   };
 
   const postNotAnswered = () => {
     console.log("Post has change to not answer.");
     postRef.update({
-      onMarkAnswered: false,
+      onMarkAnswered: "false",
     });
   };
 
@@ -265,7 +275,8 @@ function TheQuestion({ match, history }) {
                   Vote
                 </span>
                 <Link
-                  to={`/discussion/update/${posts.category}/${id}`}
+                  // to={`/discussion/update/${posts.category}/${id}`}
+                  to={`/student/${id}/update`}
                   className="hover:text-blue-600 hover:underline cursor-pointer"
                 >
                   Edit
@@ -273,7 +284,7 @@ function TheQuestion({ match, history }) {
                 {/* {
             hide === true ? <span onClick={postHide}>Hide</span> : <span onClick={postShow}>Show</span>
           } */}
-                <span
+                {/* <span
                   onClick={postHide}
                   className="hover:text-blue-600 hover:underline cursor-pointer"
                 >
@@ -284,18 +295,41 @@ function TheQuestion({ match, history }) {
                   className="hover:text-blue-600 hover:underline cursor-pointer"
                 >
                   Show
-                </span>
+                </span> */}
+
+                {posts.onHide == "true" ? (
+                  <>
+                    <span
+                      onClick={postShow}
+                      className="hover:text-blue-600 hover:underline cursor-pointer"
+                    >
+                      Show
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span
+                      onClick={postHide}
+                      className="hover:text-blue-600 hover:underline cursor-pointer"
+                    >
+                      Hide
+                    </span>
+                  </>
+                )}
+
                 <span
                   onClick={postAnswered}
                   className="hover:text-blue-600 hover:underline cursor-pointer"
+                  alt="There is an answer."
                 >
-                  Answered
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
                 </span>
                 <span
                   onClick={postNotAnswered}
                   className="hover:text-blue-600 hover:underline cursor-pointer"
+                  alt="No answers to this question."
                 >
-                  No answer
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
                 </span>
               </>
             ) : (

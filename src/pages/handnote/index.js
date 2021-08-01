@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import fire from "../../auth/fbAuth";
 import { Link, withRouter } from "react-router-dom";
 import moment from "moment";
-// import { useToasts } from "react-toast-notifications";
 import Meta from "../../components/layout/meta/Meta";
+import { useToasts } from "react-toast-notifications";
 
 function HandnoteContent({ match, history }) {
-  // const { addToast } = useToasts();
+  const { addToast } = useToasts();
   // const [answerQuestion, setAnswerQuestion] = useState("");
   const [userId, setUserId] = useState();
   const [firstName, setFirstName] = useState();
@@ -50,38 +50,29 @@ function HandnoteContent({ match, history }) {
   const db = fire.firestore();
   const postRef = db.collection("uploads").doc(postId);
 
-  const postVote = () => {
-    console.log("Upload has upvote +1");
+  const uploadHide = () => {
+    console.log("Upload content is hiding");
     postRef.update({
-      votes: fire.firestore.FieldValue.increment(1),
+      onHide: "true",
+    });
+    
+    const message = "Upload content is hiding!";
+    addToast(message, {
+      appearance: "success",
+      autoDismiss: true,
     });
   };
 
-  const postHide = () => {
-    console.log("Post is hiding");
+  const uploadShow = () => {
+    console.log("Upload content has show to public");
     postRef.update({
-      onHide: true,
+      onHide: "false",
     });
-  };
-
-  const postShow = () => {
-    console.log("Post has show to public");
-    postRef.update({
-      onHide: false,
-    });
-  };
-
-  const postAnswered = () => {
-    console.log("Post has been answered! Congratulation");
-    postRef.update({
-      onMarkAnswered: true,
-    });
-  };
-
-  const postNotAnswered = () => {
-    console.log("Post has change to not answer.");
-    postRef.update({
-      onMarkAnswered: false,
+    
+    const message = "Upload content has show to public.";
+    addToast(message, {
+      appearance: "success",
+      autoDismiss: true,
     });
   };
 
@@ -179,28 +170,21 @@ function HandnoteContent({ match, history }) {
                 </div>
               </Link>
             </div>
-            <div>
-              <p className="text-sm">
-                Viewed{" "}
-                <span className="hover:underline cursor-pointer text-blue-500 transition duration-200 ease-in-out">
-                  {uploads.views}
-                </span>{" "}
-                times
-              </p>
-              <p className="text-sm">
-                Voted{" "}
-                <span className="hover:underline cursor-pointer text-blue-500 transition duration-200 ease-in-out">
-                  {uploads.votes}
-                </span>{" "}
-                times
-              </p>
-            </div>
           </div>
         </div>
         <hr className="my-5" />
         <div className="inline-block space-y-5 justify-start lg:flex">
           <div className="w-full pr-5">
             <p>{uploads.ocrTextCaptured}</p>
+
+            <div className="flex justify-end">
+              <Link
+                to={`/handnote/export/${id}`}
+                className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600 ml-3"
+              >
+                <span>Download as PDF</span>
+              </Link>
+            </div>
           </div>
           {/* <div className="w-full lg:w-1/4 bg-gray-100 p-3 shadow-md">
             <p className="font-bold">Attachment</p>
@@ -218,14 +202,8 @@ function HandnoteContent({ match, history }) {
           {loggedIn ? (
             loggedId === userId ? (
               <>
-                <span
-                  onClick={postVote}
-                  className="hover:text-blue-600 hover:underline cursor-pointer"
-                >
-                  Vote
-                </span>
-                <Link
-                  to="/"
+              <Link
+                  to={`/admin/${id}/upload`}
                   className="hover:text-blue-600 hover:underline cursor-pointer"
                 >
                   Edit
@@ -233,30 +211,25 @@ function HandnoteContent({ match, history }) {
                 {/* {
             hide === true ? <span onClick={postHide}>Hide</span> : <span onClick={postShow}>Show</span>
           } */}
-                <span
-                  onClick={postHide}
-                  className="hover:text-blue-600 hover:underline cursor-pointer"
-                >
-                  Hide
-                </span>
-                <span
-                  onClick={postShow}
-                  className="hover:text-blue-600 hover:underline cursor-pointer"
-                >
-                  Show
-                </span>
-                <span
-                  onClick={postAnswered}
-                  className="hover:text-blue-600 hover:underline cursor-pointer"
-                >
-                  Answered
-                </span>
-                <span
-                  onClick={postNotAnswered}
-                  className="hover:text-blue-600 hover:underline cursor-pointer"
-                >
-                  No answer
-                </span>
+                {uploads.onHide == "true" ? (
+                  <>
+                  <span
+                    onClick={uploadShow}
+                    className="hover:text-blue-600 hover:underline cursor-pointer"
+                  >
+                    Show
+                  </span>
+                  </>
+                ) : (
+                  <>
+                  <span
+                    onClick={uploadHide}
+                    className="hover:text-blue-600 hover:underline cursor-pointer"
+                  >
+                    Hide
+                  </span>
+                  </>
+                )}
               </>
             ) : (
               <>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import fire from "../../auth/fbAuth";
 import { Redirect } from "react-router-dom";
 import Meta from "../../components/layout/meta/Meta";
-import UploadTable from "../../components/student/UploadTable";
+import UploadTableAdmin from "../../components/admin/UploadTable";
 import { AuthContext } from "../../auth/Auth";
 
 export default function MyUpload() {
@@ -72,7 +72,7 @@ export default function MyUpload() {
                 <React.Fragment key={e.id}>
                   {e.userId === userId ? (
                     <>
-                      <UploadTable
+                      <UploadTableAdmin
                         fileShowHide={e.onHide}
                         id={e.id}
                         title={e.fileTitle}

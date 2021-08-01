@@ -1,17 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import fire from "../../auth/fbAuth";
 import { useToasts } from "react-toast-notifications";
+
+const initialValues = {
+  title: "",
+  setOcrTextnew: "",
+  ocrText: "",
+  course: "",
+  code: "",
+  university: ""
+};
 
 function UploadFormSubmit({ ocrText, history }) {
   const { addToast } = useToasts();
   // console.log(`This is from upload form: ${ocrText}`);
 
-  const [title, setTitle] = useState("");
-  const [setOcrTextnew] = useState();
-  const [course, setCourse] = useState("");
-  const [code, setCode] = useState("");
-  const [university, setUniversity] = useState("");
+  const [states, setStates] = useState(initialValues);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setStates({
+      ...states,
+      [name]: value,
+    });
+  };
+
+  // const [title, setTitle] = useState("");
+  // const [setOcrTextnew] = useState();
+  // const [course, setCourse] = useState("");
+  // const [code, setCode] = useState("");
+  // const [university, setUniversity] = useState("");
 
   const [userId, setUserId] = useState();
   const [firstName, setFirstName] = useState();
@@ -36,6 +55,12 @@ function UploadFormSubmit({ ocrText, history }) {
     }
   });
 
+  useEffect(() => {
+    setStates({
+      ocrText: states.ocrText
+    });
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -46,11 +71,11 @@ function UploadFormSubmit({ ocrText, history }) {
         userId: userId,
         postOwner: firstName,
         createdAt: new Date().toISOString(),
-        courseCode: code,
-        courseName: course,
-        universityName: university,
-        fileTitle: title,
-        ocrTextCaptured: ocrText,
+        courseCode: states.code,
+        courseName: states.course,
+        universityName: states.university,
+        fileTitle: states.title,
+        ocrTextCaptured: states.ocrText,
         onHide: "false",
         onMarkAnswered: "false",
         views: 0,
@@ -93,8 +118,8 @@ function UploadFormSubmit({ ocrText, history }) {
                   className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
                   name="title"
                   id="title"
-                  value={title}
-                  onChange={({ target }) => setTitle(target.value)}
+                  value={states.title}
+                  onChange={handleInputChange}
                   type="text"
                   placeholder="e.g. Chapter 1 Software Engineering Notes"
                 />
@@ -116,10 +141,9 @@ function UploadFormSubmit({ ocrText, history }) {
                   name="desc"
                   id="desc"
                   value={ocrText}
-                  onChange={({ target }) => setOcrTextnew(target.value)}
+                  onChange={handleInputChange}
                   placeholder="Write here..."
                   rows="10"
-                  disabled
                   className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
                 ></textarea>
               </div>
@@ -139,8 +163,8 @@ function UploadFormSubmit({ ocrText, history }) {
                   className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
                   name="course"
                   id="course"
-                  value={course}
-                  onChange={({ target }) => setCourse(target.value)}
+                  value={states.course}
+                  onChange={handleInputChange}
                   type="text"
                   placeholder="e.g. Software Engineering"
                 />
@@ -161,8 +185,8 @@ function UploadFormSubmit({ ocrText, history }) {
                   className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
                   name="code"
                   id="code"
-                  value={code}
-                  onChange={({ target }) => setCode(target.value)}
+                  value={states.code}
+                  onChange={handleInputChange}
                   type="text"
                   placeholder="e.g. SCSJ 3323"
                 />
@@ -183,8 +207,8 @@ function UploadFormSubmit({ ocrText, history }) {
                   className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
                   name="university"
                   id="university"
-                  value={university}
-                  onChange={({ target }) => setUniversity(target.value)}
+                  value={states.university}
+                  onChange={handleInputChange}
                   type="text"
                   placeholder="e.g. University Teknologi Malaysia"
                 />

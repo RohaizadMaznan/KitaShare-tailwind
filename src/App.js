@@ -47,6 +47,7 @@ import AdminMyQuestion from "./pages/admin/MyQuestions";
 import AdminMyUpload from "./pages/admin/MyUploads";
 
 import HandnoteContent from "./pages/handnote/index";
+import ExportPDF from "./pages/handnote/PDF";
 
 import Search from "./pages/Search";
 import UploadForm from "./pages/student/UploadForm";
@@ -145,9 +146,13 @@ function App() {
               layout={SecondaryLayout}
               component={SuccessPostQuestion}
             />
-            
+            <AppRoute
+              path="/discussion/update/:tag/:id"
+              layout={SecondaryLayout}
+              component={TheQuestion}
+            />
 
-
+            {/* Student pages */}
             <AppRoute
               path="/student/dashboard"
               layout={StudentLayout2}
@@ -188,6 +193,7 @@ function App() {
               layout={StudentLayout2}
               component={UpdateQuestion}
             />
+            
 
             {/* Search page */}
             <AppRoute
@@ -232,6 +238,26 @@ function App() {
               path="/handnote/ocr/:id"
               layout={SecondaryLayout}
               component={HandnoteContent}
+            />
+            <AppRoute
+              path="/handnote/export/:id"
+              layout={SecondaryLayout}
+              component={ExportPDF}
+            />
+            <AppRoute
+              path="/admin/:id/update"
+              layout={AdminLayout}
+              component={UpdateQuestion}
+            />
+            <AppRoute
+              path="/admin/:id/upload"
+              layout={AdminLayout}
+              component={UpdateUpload}
+            />
+            <AppRoute
+              path="/admin/:id/manage-upload"
+              layout={AdminLayout}
+              component={UpdateUpload}
             />
 
             {/* <AppRoute path="/test" layout={SecondaryLayout} component={Test} /> */}

@@ -97,7 +97,7 @@ function UpdateUpload({ history }) {
         <div>
           <div className="inline-block md:flex md:justify-between">
             <div>
-              <p className="text-2xl">Update</p>
+              <p className="text-2xl">Update Upload Document</p>
             </div>
           </div>
           <hr className="my-5" />
@@ -172,7 +172,7 @@ function UpdateUpload({ history }) {
                   type="submit"
                   className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600"
                 >
-                  <span className="text-sm">Kemaskini</span>
+                  <span className="text-sm">Update</span>
                 </button>
               </div>
             </form>
