@@ -76,7 +76,7 @@ function Chatbot(props) {
         { 
             value: "find source", 
             label: "Find source", 
-            trigger: "" 
+            trigger: "12" 
         },
         { 
             value: "see documentation", 
