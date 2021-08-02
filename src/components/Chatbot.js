@@ -3,13 +3,18 @@ import ChatBot from "react-simple-chatbot";
 import { ThemeProvider } from "styled-components";
 
 function GoToDocumentation(){
-  window.open('/documentation', "_self");
+  window.open('/documentation/about', "_self");
   return <p>Go to documentation</p>
 }
 
 function GoToUploadFile(){
   window.open('/student/upload-file', "_self");
   return <p>Go to upload file</p>
+}
+
+function GoToSearch(){
+  window.open('/search', "_self");
+  return <p>Go to search page</p>
 }
 
 
@@ -132,7 +137,13 @@ function Chatbot(props) {
       trigger: "10"
     },
 
-
+    {
+      id: '12',
+      component: (
+        <GoToSearch />
+      ),
+      trigger: "10"
+    },
     // {
     //   id: "6",
     //   options: [
