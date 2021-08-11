@@ -1,6 +1,6 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/313ee6a2-a335-4b97-b8b8-d03a4fa6c540/deploy-status)](https://app.netlify.com/sites/kitashare/deploys)
 
-# Free Tailwind landing page template
+# KitaShare: A sharing materials repository web application with optical character recognition and chatbot
 
 ## Live demo
 
