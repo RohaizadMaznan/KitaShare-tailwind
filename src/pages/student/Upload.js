@@ -24,17 +24,15 @@ export default function Upload() {
           <StepCard
             image={require("../../images/upload-img.svg")}
             title="Upload file"
-            description="The latest OCR API Node.JS wrapper is from user DavideViolante. It
-              allows you to specify the OCR Space API endpoints (Free and PRO)."
+            description="Start to upload your own handnote and convert it into digital format that are copyable! Just fill in all the required fields and you are good to go!"
             dataAos="zoom-y-out"
             dataAosDelay="150"
           />
 
           <StepCard
             image={require("../../images/celebrate-img.svg")}
-            title="Start Now"
-            description="The latest OCR API Node.JS wrapper is from user DavideViolante. It
-              allows you to specify the OCR Space API endpoints (Free and PRO)."
+            title="Let's Start Rockin'!"
+            description="You handnote is converted into digital format and now can be view in our Handnote page!"
             dataAos="zoom-y-out"
             dataAosDelay="850"
           />
@@ -47,26 +45,6 @@ export default function Upload() {
               data-aos="fade-up"
               data-aos-delay="1150"
             >
-              <Link
-                to="/student/dashboard"
-                className="btn-sm p-4 md:p-3 text-white shadow-lg bg-green-500 hover:bg-green-600"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-white flex-shrink-0 mr-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  />
-                </svg>
-                <span className="text-sm">Dashboard</span>
-              </Link>
               <Link
                 to="/student/start-upload"
                 className="btn-sm text-white shadow-lg bg-blue-500 hover:bg-blue-600"

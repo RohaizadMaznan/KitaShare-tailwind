@@ -1,8 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
+import fire from "../../../auth/fbAuth";
+
+const initialValues = {
+  firstName: "",
+  lastName: "",
+  role: "",
+};
 
 function Sidebar() {
   const currentRoute = useHistory().location.pathname.toLowerCase();
+  const [states, setStates] = useState(initialValues);
+  
+  const [userID, setUserID] = useState();
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  fire.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // Get document users from firestore based on user.uid
+      fire
+        .firestore()
+        .collection("users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          // console.log("Document data:", doc.data().firstName)
+          // setFirstName(doc.data().firstName);
+          setStates({
+            firstName: doc.data().firstName,
+            lastName: doc.data().lastName,
+            role: doc.data().role,
+          });
+        });
+    } else {
+      console.log("none");
+    }
+  });
 
   return (
     <div
@@ -48,7 +81,10 @@ function Sidebar() {
                 </div>
                 <div>
                   <span className="pb-1 md:pb-0 text-sm text-gray-900">
-                    Rohaizad Maznan
+                    {states.firstName} {states.lastName}
+                  </span>
+                  <span className="pb-1 md:pb-0 text-sm capitalize text-gray-400">
+                    <br />{states.role}
                   </span>
                 </div>
               </div>

@@ -63,7 +63,7 @@ class Profile extends Component {
     const updateRef = fire
       .firestore()
       .collection("users")
-      .doc("0NpMc79cflONyWSH2ljOE9myfCz1");
+      .doc("uYzui7k4WiOPYcIrg2KweAtsu6I3");
     updateRef
       .update({
         firstName,

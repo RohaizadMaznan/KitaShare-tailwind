@@ -13,7 +13,7 @@ export default function StepCard({image, title, description, dataAos, dataAosDel
             <img
               className="mx-auto"
               src={image}
-              width="200"
+              width="600"
               height="auto"
               alt="Success"
             />

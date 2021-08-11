@@ -26,29 +26,8 @@ export default function TermConditions() {
       </div>
 
       <p className="py-6">
-        These Terms of Use apply to the use of the Platform of KitaShare
-        (Rohaizad Maznan FYP, UTM). Please read these Terms of Use carefully in
-        order to ensure that you are aware of your rights and obligations when
-        using the Platform. You can download and print this document.
+      The chatbot is one of two main features in the KitaShare system, where the chatbot will help the user to navigate to the correct location in the system efficiently. This chatbot was using a reply and triggered concept. When the chatbot asks a question to the user, the user will have to respond to the chatbot to understand the user's needs. This may choose an option question or direct question that needs the user to type it out by using a keyboard or keypad.
       </p>
-      <h1 className="py-2 font-bold">Terms of Use</h1>
-      <hr className="border-b border-gray-200" />
-      <p className="py-6">
-        These Terms of Use, inter alia, describe the following aspects of the
-        relationship between you and StuDocu:
-      </p>
-      <div>
-        <ul class="list-disc ml-10 space-y-2">
-          <li>
-            The provision of Study Material (article 7) and creating a Profile
-            (article 5);
-          </li>
-          <li>The functionalities of the Platform (articles 3- 6);</li>
-          <li>Books that you read and courses you follow</li>
-          <li>The notice and take down procedure (article 14);</li>
-          <li>The limitation of liability of StuDocu (article 15).</li>
-        </ul>
-      </div>
 
       <UsefulLikes />
     </div>

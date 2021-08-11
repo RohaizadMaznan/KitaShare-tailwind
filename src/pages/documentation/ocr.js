@@ -35,29 +35,8 @@ export default function TermConditions() {
       </div>
 
       <p className="py-6">
-        These Terms of Use apply to the use of the Platform of KitaShare
-        (Rohaizad Maznan FYP, UTM). Please read these Terms of Use carefully in
-        order to ensure that you are aware of your rights and obligations when
-        using the Platform. You can download and print this document.
+      Optical character recognition or optical character reader (OCR) is that the electronic or mechanical conversion of pictures of written, written or written text into machine-encoded text, whether or not from a scanned document, a photograph of a document, a scene-photo (e.g., text on signs and billboards during a landscape photo) or from subtitle text superimposed on a picture (e.g., from a tv broadcast).
       </p>
-      <h1 className="py-2 font-bold">Terms of Use</h1>
-      <hr className="border-b border-gray-200" />
-      <p className="py-6">
-        These Terms of Use, inter alia, describe the following aspects of the
-        relationship between you and StuDocu:
-      </p>
-      <div>
-        <ul class="list-disc ml-10 space-y-2">
-          <li>
-            The provision of Study Material (article 7) and creating a Profile
-            (article 5);
-          </li>
-          <li>The functionalities of the Platform (articles 3- 6);</li>
-          <li>Books that you read and courses you follow</li>
-          <li>The notice and take down procedure (article 14);</li>
-          <li>The limitation of liability of StuDocu (article 15).</li>
-        </ul>
-      </div>
 
       <UsefulLikes />
     </div>

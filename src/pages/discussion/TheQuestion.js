@@ -307,7 +307,7 @@ function TheQuestion({ match, history }) {
                   Show
                 </span> */}
 
-                {posts.onHide == "true" ? (
+                {posts.onHide === "true" ? (
                   <>
                     <span
                       onClick={postShow}

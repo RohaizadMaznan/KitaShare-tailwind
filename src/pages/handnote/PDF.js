@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import fire from "../../auth/fbAuth";
 import { Link, withRouter } from "react-router-dom";
-import moment from "moment";
+// import moment from "moment";
 // import { useToasts } from "react-toast-notifications";
 import Meta from "../../components/layout/meta/Meta";
 import Pdf from "react-to-pdf";
@@ -27,6 +27,7 @@ function ExportPDF({ match, history }) {
     if (user) {
       setLoggedIn(true);
       setLoggedId(user.uid);
+      console.log(loggedId);
     } else {
       setLoggedIn(false);
     }
