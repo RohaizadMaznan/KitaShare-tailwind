@@ -9,7 +9,6 @@ function HandnoteContent({ match, history }) {
   const { addToast } = useToasts();
   // const [answerQuestion, setAnswerQuestion] = useState("");
   const [userId, setUserId] = useState();
-  const [firstName, setFirstName] = useState();
 
   const [loggedId, setLoggedId] = useState();
 
@@ -55,7 +54,7 @@ function HandnoteContent({ match, history }) {
     postRef.update({
       onHide: "true",
     });
-    
+
     const message = "Upload content is hiding!";
     addToast(message, {
       appearance: "success",
@@ -68,7 +67,7 @@ function HandnoteContent({ match, history }) {
     postRef.update({
       onHide: "false",
     });
-    
+
     const message = "Upload content has show to public.";
     addToast(message, {
       appearance: "success",
@@ -86,7 +85,7 @@ function HandnoteContent({ match, history }) {
         .get()
         .then((doc) => {
           // console.log("Document data:", doc.data().firstName)
-          setFirstName(doc.data().firstName);
+          // setFirstName(doc.data().firstName);
         });
 
       setUserId(user.uid);
@@ -118,16 +117,6 @@ function HandnoteContent({ match, history }) {
                 <path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" />
               </svg>
             </li>
-            {/* <li class="flex items-center">
-              <Link to="#">Second Level</Link>
-              <svg
-                class="fill-current w-3 h-3 mx-3"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 320 512"
-              >
-                <path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" />
-              </svg>
-            </li> */}
             <li>
               <Link to="/" className="text-gray-500" aria-current="page">
                 {uploads.fileTitle}
@@ -202,7 +191,7 @@ function HandnoteContent({ match, history }) {
           {loggedIn ? (
             loggedId === userId ? (
               <>
-              <Link
+                <Link
                   to={`/admin/${id}/upload`}
                   className="hover:text-blue-600 hover:underline cursor-pointer"
                 >
@@ -211,23 +200,23 @@ function HandnoteContent({ match, history }) {
                 {/* {
             hide === true ? <span onClick={postHide}>Hide</span> : <span onClick={postShow}>Show</span>
           } */}
-                {uploads.onHide == "true" ? (
+                {uploads.onHide === "true" ? (
                   <>
-                  <span
-                    onClick={uploadShow}
-                    className="hover:text-blue-600 hover:underline cursor-pointer"
-                  >
-                    Show
-                  </span>
+                    <span
+                      onClick={uploadShow}
+                      className="hover:text-blue-600 hover:underline cursor-pointer"
+                    >
+                      Show
+                    </span>
                   </>
                 ) : (
                   <>
-                  <span
-                    onClick={uploadHide}
-                    className="hover:text-blue-600 hover:underline cursor-pointer"
-                  >
-                    Hide
-                  </span>
+                    <span
+                      onClick={uploadHide}
+                      className="hover:text-blue-600 hover:underline cursor-pointer"
+                    >
+                      Hide
+                    </span>
                   </>
                 )}
               </>

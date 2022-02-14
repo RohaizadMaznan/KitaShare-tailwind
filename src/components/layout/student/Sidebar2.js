@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import fire from "../../../auth/fbAuth";
 
@@ -11,9 +11,6 @@ const initialValues = {
 function Sidebar() {
   const currentRoute = useHistory().location.pathname.toLowerCase();
   const [states, setStates] = useState(initialValues);
-  
-  const [userID, setUserID] = useState();
-  const [loggedIn, setLoggedIn] = useState(false);
 
   fire.auth().onAuthStateChanged((user) => {
     if (user) {

@@ -7,31 +7,9 @@ import Meta from "../../components/layout/meta/Meta";
 import Pdf from "react-to-pdf";
 
 function ExportPDF({ match, history }) {
-  // const { addToast } = useToasts();
-  // const [answerQuestion, setAnswerQuestion] = useState("");
-  const [userId, setUserId] = useState();
-  const [firstName, setFirstName] = useState();
-
-  const [loggedId, setLoggedId] = useState();
-
-  // console.log(match, "test");
 
   const id = match.params.id;
-  // console.log(id);
-
   const [uploads, setUploads] = useState([]);
-  // const [hide, setHide] = useState();
-
-  const [loggedIn, setLoggedIn] = useState(false);
-  fire.auth().onAuthStateChanged((user) => {
-    if (user) {
-      setLoggedIn(true);
-      setLoggedId(user.uid);
-      console.log(loggedId);
-    } else {
-      setLoggedIn(false);
-    }
-  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,31 +20,10 @@ function ExportPDF({ match, history }) {
         .get();
       const data = snapshot.data();
       setUploads(data);
-      // setHide(data.onHide)
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  fire.auth().onAuthStateChanged((user) => {
-    if (user) {
-      // Get document users from firestore based on user.uid
-      fire
-        .firestore()
-        .collection("users")
-        .doc(user.uid)
-        .get()
-        .then((doc) => {
-          // console.log("Document data:", doc.data().firstName)
-          setFirstName(doc.data().firstName);
-        });
-
-      setUserId(user.uid);
-      //setRole(user.role)
-    } else {
-      console.log("none");
-    }
-  });
 
   const ref = React.createRef();
 
