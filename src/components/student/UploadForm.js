@@ -1,36 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import fire from "../../auth/fbAuth";
 import { useToasts } from "react-toast-notifications";
 
-const initialValues = {
-  title: "",
-  setOcrTextnew: "",
-  ocrText: "",
-  course: "",
-  code: "",
-  university: ""
-};
-
 function UploadFormSubmit({ ocrText, history }) {
   const { addToast } = useToasts();
-  // console.log(`This is from upload form: ${ocrText}`);
 
-  const [states, setStates] = useState(initialValues);
+  const [form, setForm] = useState({
+    title: "",
+    course: "",
+    code: "",
+    university: "",
+  });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setStates({
-      ...states,
-      [name]: value,
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
     });
   };
-
-  // const [title, setTitle] = useState("");
-  // const [setOcrTextnew] = useState();
-  // const [course, setCourse] = useState("");
-  // const [code, setCode] = useState("");
-  // const [university, setUniversity] = useState("");
 
   const [userId, setUserId] = useState();
   const [firstName, setFirstName] = useState();
@@ -55,14 +43,10 @@ function UploadFormSubmit({ ocrText, history }) {
     }
   });
 
-  useEffect(() => {
-    setStates({
-      ocrText: states.ocrText
-    });
-  }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    console.log(form);
 
     fire
       .firestore()
@@ -71,11 +55,11 @@ function UploadFormSubmit({ ocrText, history }) {
         userId: userId,
         postOwner: firstName,
         createdAt: new Date().toISOString(),
-        courseCode: states.code,
-        courseName: states.course,
-        universityName: states.university,
-        fileTitle: states.title,
-        ocrTextCaptured: states.ocrText,
+        courseCode: form.code,
+        courseName: form.course,
+        universityName: form.university,
+        fileTitle: form.title,
+        ocrTextCaptured: ocrText,
         onHide: "false",
         onMarkAnswered: "false",
         views: 0,
@@ -85,7 +69,7 @@ function UploadFormSubmit({ ocrText, history }) {
         // console.log("Success a file post");
         // window.location.reload(true)
         addToast("Success! You have upload the handnote.", { appearance: "success", autoDismiss: true });
-        history.push("/")
+        history.push("/student/dashboard")
       })
       .catch((err) => {
         const message = err.message;
@@ -118,8 +102,8 @@ function UploadFormSubmit({ ocrText, history }) {
                   className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
                   name="title"
                   id="title"
-                  value={states.title}
-                  onChange={handleInputChange}
+                  value={form.title}
+                  onChange={handleChange}
                   type="text"
                   placeholder="e.g. Chapter 1 Software Engineering Notes"
                 />
@@ -138,10 +122,9 @@ function UploadFormSubmit({ ocrText, history }) {
               <div className="md:w-10/12">
                 <textarea
                   isrequired="true"
-                  name="desc"
-                  id="desc"
-                  value={ocrText}
-                  onChange={handleInputChange}
+                  name="ocrText"
+                  id="ocrText"
+                  defaultValue={ocrText}
                   placeholder="Write here..."
                   rows="10"
                   className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
@@ -163,8 +146,8 @@ function UploadFormSubmit({ ocrText, history }) {
                   className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
                   name="course"
                   id="course"
-                  value={states.course}
-                  onChange={handleInputChange}
+                  value={form.course}
+                  onChange={handleChange}
                   type="text"
                   placeholder="e.g. Software Engineering"
                 />
@@ -185,8 +168,8 @@ function UploadFormSubmit({ ocrText, history }) {
                   className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
                   name="code"
                   id="code"
-                  value={states.code}
-                  onChange={handleInputChange}
+                  value={form.code}
+                  onChange={handleChange}
                   type="text"
                   placeholder="e.g. SCSJ 3323"
                 />
@@ -207,8 +190,8 @@ function UploadFormSubmit({ ocrText, history }) {
                   className="text-sm mt-2 appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-blue-500 rounded focus:outline-none"
                   name="university"
                   id="university"
-                  value={states.university}
-                  onChange={handleInputChange}
+                  value={form.university}
+                  onChange={handleChange}
                   type="text"
                   placeholder="e.g. University Teknologi Malaysia"
                 />
@@ -229,4 +212,4 @@ function UploadFormSubmit({ ocrText, history }) {
   );
 }
 
-export default withRouter(UploadFormSubmit)
+export default withRouter(UploadFormSubmit);
